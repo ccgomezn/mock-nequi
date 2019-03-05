@@ -1,8 +1,10 @@
 require_relative '../../db/db_handler'
 require_relative '../modules/validate_data'
+require_relative 'manager_interface'
 
 class Account
     include ValidateData
+    include ManagerInferface
 
     def initialize(db_handler)
         @db_handler = db_handler
