@@ -16,10 +16,7 @@ class DbHandler
                 id INTEGER PRIMARY KEY,
                 avaiable_balance DECIMAL(10, 0) NOT NULL,
                 total_balance DECIMAL(10, 0) NOT NULL,
-                creation_date DATETIME NOT NULL,
-                user_id INT NOT NULL,
-                mattress_id INT NOT NULL,
-                FOREIGN KEY(mattress_id) REFERENCES mattresses(id)
+                creation_date DATETIME NOT NULL
             );
         SQL
 
@@ -29,7 +26,8 @@ class DbHandler
                 name VARCHAR(45) NOT NULL,
                 email VARCHAR(45) NOT NULL,
                 password_digest VARCHAR NOT NULL,
-                account_id INT NOT NULL
+                account_id INT NOT NULL,
+                FOREIGN KEY(account_id) REFERENCES accounts(id)
             );
         SQL
 
@@ -37,9 +35,7 @@ class DbHandler
             CREATE TABLE IF NOT EXISTS transactions(
                 id INTEGER PRIMARY KEY,
                 date DATETIME NOT NULL,
-                amount DECIMA(10, 0) NOT NULL,
-                individual_transaction_id INT,
-                mutual_transaction_id INT
+                amount DECIMAL(10, 0) NOT NULL
             );
         SQL
 
@@ -104,7 +100,7 @@ class DbHandler
     end
 
     #method to connect to the db
-    def connect_sqlite
+    def connect
         db = SQLite3::Database.open(@db_folder_path + @db_name)
         puts("connected to de database: ", @db_name)
         return db
