@@ -38,6 +38,3 @@ class Account
     end
 
 end
-
-
-
