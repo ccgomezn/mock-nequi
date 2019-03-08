@@ -1,11 +1,10 @@
-require_relative '../models/account'
+#require_relative '../db_managers/account_manager'
 require_relative '../../db/db_handler'
 
 #initializes the db with the given name and create it if does not exists
 db_folder_path = "../../db/"
 @dbHandler = DbHandler.new(db_folder_path, "mock_nequi_db.db")
 @dbHandler.create
+db = @dbHandler.connect
 
-acc = Account.new(@dbHandler)
-
-acc.insert(1000000, 2000000, "03/04/2019 18:25:00")
+db.execute("UPDATE accounts SET creation_date = ? WHERE accounts.id = ?", ["03/06/2019 23:13:20", 1])

@@ -105,4 +105,10 @@ class DbHandler
         puts("connected to de database: ", @db_name)
         return db
     end
+
+    def close_connection(db)
+        if db
+            db.close
+        end
+    end
 end

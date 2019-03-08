@@ -2,7 +2,7 @@ require_relative '../../db/db_handler'
 require_relative '../modules/validate_data'
 require_relative 'manager_interface'
 
-class Account
+class AccountManager
     include ValidateData
     include ManagerInferface
 
@@ -21,22 +21,32 @@ class Account
         else
             return false
         end
-    end 
-
+    end
+    
     def insert(*data)
         db = @db_handler.connect
         
-        avaiable_balance = data[0]
-        total_balance = data[1]
-        creation_date = data[2]
-        
         if valid_data?(*data)
             db.execute("INSERT INTO accounts(avaiable_balance, total_balance, 
-                creation_date) VALUES(?, ?, ?)", 
-                [avaiable_balance, total_balance, creation_date])
+                creation_date) VALUES(?, ?, ?)", [*data])
         else
             print("ERROR: couldn't insert account data")
         end
     end
 
+    def find(id)
+        find_builder(id, "accounts")
+    end
+    
+    #UPDATE And DELETE builders need a dict with the columns and values, if empty value = nil
+    def update(id, *data)
+        if data.length
+        data_dict = {avaiable_balance: *data[0], total_balance: *data[1],
+                        creation_date: *data[2]}
+        update_builder()
+    end
+
+    def delete(id, *data)
+        db.execute()
+    end
 end
