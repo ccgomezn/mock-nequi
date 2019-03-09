@@ -24,7 +24,7 @@ class AccountManager
     end
     
     def insert(*data)
-        db = @db_handler.connect
+        #db = @db_handler.connect
         
         if valid_data?(*data)
             db.execute("INSERT INTO accounts(avaiable_balance, total_balance, 
@@ -40,10 +40,9 @@ class AccountManager
     
     #UPDATE And DELETE builders need a dict with the columns and values, if empty value = nil
     def update(id, *data)
-        if data.length
         data_dict = {avaiable_balance: *data[0], total_balance: *data[1],
                         creation_date: *data[2]}
-        update_builder()
+        update_built(id, data_dict)
     end
 
     def delete(id, *data)
