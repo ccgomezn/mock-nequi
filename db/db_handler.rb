@@ -27,6 +27,7 @@ class DbHandler
                 email VARCHAR(45) NOT NULL,
                 password_digest VARCHAR NOT NULL,
                 account_id INT NOT NULL,
+                UNIQUE(email)
                 FOREIGN KEY(account_id) REFERENCES accounts(id)
             );
         SQL
@@ -102,7 +103,12 @@ class DbHandler
     #method to connect to the db
     def connect
         db = SQLite3::Database.open(@db_folder_path + @db_name)
-        puts("connected to de database: ", @db_name)
         return db
+    end
+
+    def close_connection(db)
+        if db
+            db.close
+        end
     end
 end
