@@ -1,22 +1,21 @@
 require_relative '../../db/db_handler'
 require_relative '../modules/validate_data'
-require_relative 'manager_interface'
 require_relative '../models/account'
-class AccountManager
+class MattressManager
     include ValidateData
-    include ManagerInferface
 
     def initialize(db_handler)
         @db_handler = db_handler
     end
 
     def valid_data?(*data)
-        avaiable_balance_valid = numeric_validation(data[0])
-        total_balance_valid = numeric_validation(data[1])
-        creation_date_valid = datetime_validation(data[2])
+        id_valid = numeric_validation(data[0])
+        balance_valid = numeric_validation(data[1])
+        account_id_valid = numeric_validation(data[2])
+        
+        
 
-        if (avaiable_balance_valid and total_balance_valid and \
-            creation_date_valid)
+        if (id_valid and balance_valid and account_id_valid)
             return true
         else
             return false
@@ -24,23 +23,28 @@ class AccountManager
     end
     
     def insert(*data)
-        insert_builder(data[0], "accounts", data[1...data.length])
-        return Account.new()
+                
+        if valid_data?(data)
+            data_dict = {id: data[0], balance: data[1], account: data[2]}
+            insert_execution("mattresses", data_dict)
+            return Mattresses.new()
+        else
+            print("ERROR: couldn't insert account data")
+        end
     end
 
     def find(id)
-        find_builder(id, "accounts")
-        return Account.new()
+        find_execution("mattresses", id)
+        return Mattresses.new()
     end
     
     #UPDATE And DELETE builders need a dict with the columns and values, if empty value = nil
     def update(id, *data)
-        if data.length
-        data_dict = {avaiable_balance: *data[0], total_balance: *data[1],
-                        creation_date: *data[2]}
-        update_builder(id, "accounts", data_dict)
+        data_dict = {balance: data[0], account: data[1]}
+        update_execution("mattresses", data_dict, id)
     end
 
-    def delete(id, *data)
+    def delete(id)
+        delete_execution("mattresses", id)
     end
 end

@@ -1,46 +1,44 @@
-module SqlQueyBuilder
+module SqlQueryBuilder
 
-    def find_builder(id, table)
-        db = @db_handler.connect
-        db.execute("SELECT * FROM #{table} where id = #{id}")
+    def find_query(table_name)
+        find_query = "SELECT * FROM #{table_name} WHERE #{table_name}.id = ?"
     end
 
-    def insert_builder(id, table, *data)
-        db = @db_handler.connect
-        insert_query = insert_builder(table, *data)
-        db.execute(insert_query)
-    end        
-
-    # update for a given table using a data where the key is the column and the value is the data
-    def update_builder(id, table, *data)
-        db = @db_handler.connect
-        db.execute("UPDATE #{table} SET column = ? WHERE ")
-        #db.execute("UPDATE accounts SET creation_date = ? WHERE accounts.id = ?", ["03/06/2019 23:13:20", 1])
-    end
-
-    def insert_string_builder(table, *data)
+    def insert_query(table_name, columns)
         column_string = ""
         values_string = ""
 
-        data.each_with_index do |values, i|
-            if i < data.length - 1
-                column_string += "#{data[i]}, "
+        columns.each_with_index do |column, i|
+            if i < columns.length - 1
+                column_string += "#{column}, "
                 values_string += "?, "
             else
-                column_string += "#{data[i]}"
+                column_string += "#{column}"
                 values_string += "?"
             end
         end
 
-        insert_statement = "INSERT INTO #{table}(#{column_string})
-                            VALUES(#{values_string})"
+        insert_query = "INSERT INTO #{table_name}(#{column_string})"\
+                        " VALUES(#{values_string})"
     end
 
-    def update_string_builder(table, *data, id)
-        update_string = "UPDATE #{table} SET "
+    def update_query(table_name, columns)
+        column_value_string = ""
+        
+        columns.each_with_index do |column, i|
+            if i < columns.length - 1
+                column_value_string += "#{column} = ?, "
+            else
+                column_value_string += "#{column} = ?"
+            end
+        end
+        
+        update_query = "UPDATE #{table_name} SET #{column_value_string}"\
+                        " WHERE #{table_name}.id = ?"
     end
 
-    def delete_string_builder(table, id)
-    
+    def delete_query(table_name)
+        delete_query = "DELETE FROM #{table_name} WHERE #{table_name}.id = ?"
     end
+
 end

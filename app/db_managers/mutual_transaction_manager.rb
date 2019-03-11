@@ -1,22 +1,23 @@
 require_relative '../../db/db_handler'
 require_relative '../modules/validate_data'
-require_relative 'manager_interface'
 require_relative '../models/account'
-class AccountManager
+class MutualTransactionManager
     include ValidateData
-    include ManagerInferface
 
     def initialize(db_handler)
         @db_handler = db_handler
     end
 
     def valid_data?(*data)
-        avaiable_balance_valid = numeric_validation(data[0])
-        total_balance_valid = numeric_validation(data[1])
-        creation_date_valid = datetime_validation(data[2])
+        id_valid = numeric_validation(data[0])
+        transaction_id_valid = name_validation(data[1])
+        origin_account_id_valid = numeric_validation(data[2])
+        final_account_id_valid = numeric_validation(data[3])
+        
+        
 
-        if (avaiable_balance_valid and total_balance_valid and \
-            creation_date_valid)
+        if (id_valid and transaction_id_valid and origin_account_id_valid and \
+            final_account_id_valid)
             return true
         else
             return false
@@ -24,23 +25,30 @@ class AccountManager
     end
     
     def insert(*data)
-        insert_builder(data[0], "accounts", data[1...data.length])
-        return Account.new()
+                
+        if valid_data?(data)
+             data_dict = {id: data[0], transaction_id: data[1], origin_account_id: data[2],
+                        final_account_id: data[3]}
+            insert_execution("mutual_transactions", data_dict)
+            return MutualTransaction.new()
+        else
+            print("ERROR: couldn't insert account data")
+        end
     end
 
     def find(id)
-        find_builder(id, "accounts")
-        return Account.new()
+        find_execution("mutual_transactions", id)
+        return MutualTransaction.new()
     end
     
     #UPDATE And DELETE builders need a dict with the columns and values, if empty value = nil
     def update(id, *data)
-        if data.length
-        data_dict = {avaiable_balance: *data[0], total_balance: *data[1],
-                        creation_date: *data[2]}
-        update_builder(id, "accounts", data_dict)
+        data_dict = {transaction_id: data[0], origin_account_id: data[1],
+                        final_account_id: data[2]}
+        update_execution("mutual_transactions", data_dict, id)
     end
 
-    def delete(id, *data)
+    def delete(id)
+        delete_execution("mutual_transactions", id)
     end
 end
