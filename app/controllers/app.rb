@@ -7,7 +7,6 @@ include SqlQueryExecutor
 db_folder_path = "../../db/"
 @db_handler = DbHandler.new(db_folder_path, "mock_nequi_db.db")
 @db_handler.create
-#db = @dbHandler.connect
 
 insert_data = {avaiable_balance: 1000, total_balance: 2000, creation_date: "03/06/2019 23:13:20"}
 update_data = {avaiable_balance: 0}
