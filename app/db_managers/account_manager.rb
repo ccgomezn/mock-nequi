@@ -1,6 +1,7 @@
 require_relative '../../db/db_handler'
 require_relative '../modules/validate_data'
 require_relative '../models/account'
+
 class AccountManager
     include ValidateData
 
@@ -22,8 +23,7 @@ class AccountManager
         end
     end
     
-    def insert(*data)
-                
+    def insert(*data)                
         if valid_data?(data)
              data_dict = {id: data[0], avaiable_balance: data[1], total_balance: data[2],
                         creation_date: data[3]}
