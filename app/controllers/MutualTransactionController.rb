@@ -7,7 +7,6 @@ class IndividualTransactionController
   attr_accessor :id, :product, :location, :transaction_id, :account_id
 
   def initialize(params)
-    @id = params[:id]
     @product = params[:product]
     @location = params[:location]
     @transaction_id = params[:transaction_id]

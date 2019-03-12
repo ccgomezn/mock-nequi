@@ -7,7 +7,6 @@ class TransactionController
   attr_accessor :id, :date, :amount
 
   def initialize(params)
-    @id = params[:id]
     @date = params[:date]
     @amount = params[:amount]
   end
