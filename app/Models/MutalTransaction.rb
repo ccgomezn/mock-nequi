@@ -1,5 +1,5 @@
 class MutualTransaction
-  attr_accessor :id, :product, :location, :transaction_id, :account_id
+  attr_accessor  :product, :location, :transaction_id, :account_id
 
   def initialize(params)
     @product = params[:product]

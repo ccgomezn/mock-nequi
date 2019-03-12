@@ -1,5 +1,5 @@
 class Mattress
-  attr_accessor :id, :balance, :account_id
+  attr_accessor :balance, :account_id
 
   def initialize(params)
     @balance = params[:balance]

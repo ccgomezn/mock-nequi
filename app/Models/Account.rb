@@ -1,5 +1,5 @@
 class Account
-  attr_accessor :id, :avaiable_balance, :total_balance, :creation_date
+  attr_accessor :avaiable_balance, :total_balance, :creation_date
 
   def initialize(params)
     @avaiable_balance = params[:avaiable_balance]

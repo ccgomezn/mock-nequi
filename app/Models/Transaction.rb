@@ -1,5 +1,5 @@
 class Transaction
-  attr_accessor :id, :date, :amount
+  attr_accessor  :date, :amount
 
   def initialize(params)
     @date = params[:date]

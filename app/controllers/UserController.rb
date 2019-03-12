@@ -4,7 +4,7 @@ class UserController
 
   include UserManager
 
-  attr_accessor :id, :name, :password_digest, :account_id
+  attr_accessor :name, :password_digest, :account_id
 
   def initialize(params)
     @name = params[:name]

@@ -4,7 +4,7 @@ class PocketController
 
   include PocketManager
 
-  attr_accessor :id, :name, :balance, :creation_date, :account_id
+  attr_accessor :name, :balance, :creation_date, :account_id
 
   def initialize(params)
     @name = params[:name]
