@@ -36,7 +36,7 @@ module SqlQueryExecutor
 
     def execute_query(query, values, query_error)
         begin
-            db = @db_handler.connect
+            db = @db_handler.db
             query_stmt = db.prepare(query)
             response = query_stmt.execute(values)
             response = response.next
@@ -45,7 +45,6 @@ module SqlQueryExecutor
             puts(sql_error)
         ensure
             stmt_close(query_stmt)
-            @db_handler.close_connection(db)
             return response
         end
     end
