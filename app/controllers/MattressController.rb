@@ -1,7 +1,9 @@
 require_relative '../mattresses_manager'
 
 class MatressController
+
   include MattressesManager
+  
   attr_accessor :id, :balance, :account_id
 
   def initialize(params)

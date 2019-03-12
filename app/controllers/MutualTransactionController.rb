@@ -1,7 +1,9 @@
 require_relative '../individual_transaction_manager'
 
 class IndividualTransactionController
+
   include IndividualTransactionManager
+  
   attr_accessor :id, :product, :location, :transaction_id, :account_id
 
   def initialize(params)

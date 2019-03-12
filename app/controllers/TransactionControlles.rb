@@ -1,7 +1,9 @@
 require_relative '../transaction_manager'
 
 class TransactionController
+
   include TransactionManager
+
   attr_accessor :id, :date, :amount
 
   def initialize(params)
