@@ -3,7 +3,7 @@ require_relative '../mutual_transaction_manager'
 class MutualTransactionController
 
   include MutualTransactionManager
-  
+
   attr_accessor :id, :transaction_id, :origin_account_id, :final_account_id
 
   def initialize(params)

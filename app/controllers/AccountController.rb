@@ -1,7 +1,7 @@
 require_relative '../db_manager/account_manager'
 
 class AccountController
-  
+
   include AccountManager
 
   attr_accessor :id, :avaiable_balance, :total_balance, :creation_date

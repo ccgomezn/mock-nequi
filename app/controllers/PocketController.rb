@@ -3,7 +3,7 @@ require_relative '../pocket_manager'
 class PocketController
 
   include PocketManager
-  
+
   attr_accessor :id, :name, :balance, :creation_date, :account_id
 
   def initialize(params)

@@ -3,7 +3,7 @@ require_relative '../goal_manager'
 class GoalController
 
   include GoalManager
-  
+
   attr_accessor :id, :name, :goal, :balance, :state, :deadline, :creation_date, :account_id
 
   def initialize(params)
