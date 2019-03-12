@@ -1,35 +1,16 @@
-require_relative '../../db/db_handler'
 require_relative '../modules/validate_data'
 require_relative '../models/account'
+require_relative '../modules/sql_query_executor'
+
 class MutualTransactionManager
     include ValidateData
+    include SqlQueryExecutor
 
-    def initialize(db_handler)
-        @db_handler = db_handler
-    end
-
-    def valid_data?(*data)
-        id_valid = numeric_validation(data[0])
-        transaction_id_valid = name_validation(data[1])
-        origin_account_id_valid = numeric_validation(data[2])
-        final_account_id_valid = numeric_validation(data[3])
-        
-        
-
-        if (id_valid and transaction_id_valid and origin_account_id_valid and \
-            final_account_id_valid)
-            return true
-        else
-            return false
-        end
-    end
-    
-    def insert(*data)
+    def insert(params)
                 
-        if valid_data?(data)
-             data_dict = {id: data[0], transaction_id: data[1], origin_account_id: data[2],
-                        final_account_id: data[3]}
-            insert_execution("mutual_transactions", data_dict)
+        if valid_data?(params)
+             
+            insert_execution("mutual_transactions", params)
             return MutualTransaction.new()
         else
             print("ERROR: couldn't insert account data")
@@ -42,13 +23,35 @@ class MutualTransactionManager
     end
     
     #UPDATE And DELETE builders need a dict with the columns and values, if empty value = nil
-    def update(id, *data)
-        data_dict = {transaction_id: data[0], origin_account_id: data[1],
-                        final_account_id: data[2]}
-        update_execution("mutual_transactions", data_dict, id)
+    def update(id, params)
+        if valid_data?(params)
+            update_execution("mutual_transactions", params, id)
+        else
+            print("ERROR: couldn't insert account data")
+        end
     end
 
     def delete(id)
         delete_execution("mutual_transactions", id)
+    end
+
+    private
+
+    def valid_data?(params)
+        transaction_id_valid = params.has_key?(:name) ? 
+                               numeric_validation(params[:name]) : true
+        origin_account_id_valid = params.has_key?(:origin_account) ? 
+                                  numeric_validation(params[:origin_account]) : true
+        final_account_id_valid = params.has_key?(:final_account) ? 
+                                 numeric_validation(params[:final_account]) : true
+        
+        
+
+        if (transaction_id_valid and origin_account_id_valid and \
+            final_account_id_valid)
+            return true
+        else
+            return false
+        end
     end
 end

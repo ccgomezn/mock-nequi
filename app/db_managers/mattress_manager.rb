@@ -1,32 +1,15 @@
-require_relative '../../db/db_handler'
 require_relative '../modules/validate_data'
 require_relative '../models/account'
+require_relative '../modules/sql_query_executor'
+
 class MattressManager
     include ValidateData
+    include SqlQueryExecutor
 
-    def initialize(db_handler)
-        @db_handler = db_handler
-    end
-
-    def valid_data?(*data)
-        id_valid = numeric_validation(data[0])
-        balance_valid = numeric_validation(data[1])
-        account_id_valid = numeric_validation(data[2])
-        
-        
-
-        if (id_valid and balance_valid and account_id_valid)
-            return true
-        else
-            return false
-        end
-    end
-    
-    def insert(*data)
+    def insert(params)
                 
-        if valid_data?(data)
-            data_dict = {id: data[0], balance: data[1], account: data[2]}
-            insert_execution("mattresses", data_dict)
+        if valid_data?(params)
+            insert_execution("mattresses", params)
             return Mattresses.new()
         else
             print("ERROR: couldn't insert account data")
@@ -39,12 +22,32 @@ class MattressManager
     end
     
     #UPDATE And DELETE builders need a dict with the columns and values, if empty value = nil
-    def update(id, *data)
-        data_dict = {balance: data[0], account: data[1]}
-        update_execution("mattresses", data_dict, id)
+    def update(id, params)
+        if valid_data?(params)
+            update_execution("mattresses", params, id)
+        else
+            print("ERROR: couldn't insert account data")
+        end
     end
 
     def delete(id)
         delete_execution("mattresses", id)
+    end
+
+    private
+
+    def valid_data?(params)
+        balance_valid = params.has_key?(:balance) ? 
+                        numeric_validation(params[:balance]) : true
+        account_id_valid = params.has_key?(:account_id) ? 
+                           numeric_validation(params[:account_id]) : true
+        
+        
+
+        if (balance_valid and account_id_valid)
+            return true
+        else
+            return false
+        end
     end
 end
