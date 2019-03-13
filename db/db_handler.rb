@@ -78,6 +78,7 @@ class DbHandler
             CREATE TABLE IF NOT EXISTS individual_transactions(
                 id INT NOT NULL,
                 product VARCHAR(45) NULL,
+                product_id INT NOT NULL,
                 location VARCHAR(45) NOT NULL,
                 transaction_id INT NOT NULL,
                 account_id INT NOT NULL,

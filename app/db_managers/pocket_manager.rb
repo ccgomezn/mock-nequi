@@ -6,6 +6,11 @@ class PocketManager
     include ValidateData
     include SqlQueryExecutor
 
+
+    def initialize(db_handler)
+        @db_handler = db_handler	      
+    end
+
     def insert(params)
                 
         if valid_data?(params)

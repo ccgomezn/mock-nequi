@@ -6,11 +6,16 @@ class TransactionManager
     include ValidateData
     include SqlQueryExecutor
 
+
+    def initialize(db_handler)
+        @db_handler = db_handler	      
+    end
+
     def insert(params)
                 
         if valid_data?(params)
             insert_execution("transactions", params)
-            return Transaction.new()
+            Transaction.new(params)
         else
             print("ERROR: couldn't insert account data")
         end
