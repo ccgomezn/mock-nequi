@@ -34,6 +34,12 @@ module SqlQueryExecutor
         execute_query(delete_query, id, delete_error())
     end
 
+    def get_last_register_execution(table_name)
+        get_last_register = get_last_register_query(table_name)
+        execute_query(get_last_register, [], find_error())
+
+    end
+
     def execute_query(query, values, query_error)
         begin
             db = @db_handler.db

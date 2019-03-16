@@ -1,5 +1,5 @@
 require_relative '../modules/validate_data'
-require_relative '../models/account'
+require_relative '../models/mutual_transaction'
 require_relative '../modules/sql_query_executor'
 
 class MutualTransactionManager
@@ -7,7 +7,7 @@ class MutualTransactionManager
     include SqlQueryExecutor
 
     def initialize(db_handler)
-        @db_handler = db_handler	      
+        @db_handler = db_handler
     end
 
     def insert(params)
@@ -15,7 +15,9 @@ class MutualTransactionManager
         if valid_data?(params)
              
             insert_execution("mutual_transactions", params)
-            return MutualTransaction.new()
+            mutual_transaction_id = get_last_register_execution('mutual_transactions')
+            params[:id] = mutual_transaction_id
+            MutualTransaction.new(params)
         else
             print("ERROR: couldn't insert account data")
         end
@@ -42,8 +44,8 @@ class MutualTransactionManager
     private
 
     def valid_data?(params)
-        transaction_id_valid = params.has_key?(:name) ? 
-                               numeric_validation(params[:name]) : true
+        transaction_id_valid = params.has_key?(:transaction_id) ? 
+                               numeric_validation(params[:transaction_id]) : true
         origin_account_id_valid = params.has_key?(:origin_account) ? 
                                   numeric_validation(params[:origin_account]) : true
         final_account_id_valid = params.has_key?(:final_account) ? 

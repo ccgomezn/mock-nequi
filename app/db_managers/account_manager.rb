@@ -22,8 +22,10 @@ class AccountManager
     end
 
     def find(id)
-        find_execution("accounts", id)
-        return Account.new()
+        data_query = find_execution("accounts", id)
+        data_account = {id: data_query[0], avaiable_balance: data_query[1],
+                        total_balance: data_query[2], creation_date: data_query[3]}
+        Account.new(data_account)
     end
     
     #UPDATE And DELETE builders need a dict with the columns and values, if empty value = nil

@@ -41,4 +41,7 @@ module SqlQueryBuilder
         delete_query = "DELETE FROM #{table_name} WHERE #{table_name}.id = ?"
     end
 
+    def get_last_register_query(table_name)
+        last_register_query = "SELECT MAX(id) FROM #{table_name}"
+    end
 end

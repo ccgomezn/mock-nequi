@@ -12,8 +12,8 @@ class DbHandler
     def create
         @db.execute <<-SQL 
             CREATE TABLE IF NOT EXISTS accounts(
-                id INTEGER PRIMARY KEY,
-                avaiable_balance DECIMAL(10, 0) NOT NULL,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                available_balance DECIMAL(10, 0) NOT NULL,
                 total_balance DECIMAL(10, 0) NOT NULL,
                 creation_date DATETIME NOT NULL
             );
@@ -21,7 +21,7 @@ class DbHandler
 
         @db.execute <<-SQL 
             CREATE TABLE IF NOT EXISTS users(
-                id INTEGER PRIMARY KEY,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name VARCHAR(45) NOT NULL,
                 email VARCHAR(45) NOT NULL,
                 password_digest VARCHAR NOT NULL,
@@ -33,7 +33,7 @@ class DbHandler
 
         @db.execute <<-SQL 
             CREATE TABLE IF NOT EXISTS transactions(
-                id INTEGER PRIMARY KEY,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 date DATETIME NOT NULL,
                 amount DECIMAL(10, 0) NOT NULL
             );
@@ -41,7 +41,7 @@ class DbHandler
 
         @db.execute <<-SQL 
             CREATE TABLE IF NOT EXISTS goals(
-                id INT NOT NULL,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name VARCHAR(45) NOT NULL,
                 goal DECIMAL(10,0) NOT NULL,
                 balance DECIMAL(10,0) NOT NULL,
@@ -55,7 +55,7 @@ class DbHandler
 
         @db.execute <<-SQL 
             CREATE TABLE IF NOT EXISTS pockets(
-                id INT NOT NULL,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name VARCHAR(45) NOT NULL,
                 balance DECIMAL(10,0) NOT NULL,
                 creation_date DATETIME NOT NULL,
@@ -66,7 +66,7 @@ class DbHandler
 
         @db.execute <<-SQL 
             CREATE TABLE IF NOT EXISTS mattresses(
-                id INT NOT NULL,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 balance DECIMAL(10,0) NOT NULL,
                 account_id INT NOT NULL,
                 FOREIGN KEY(account_id) REFERENCES accounts(id)
@@ -76,7 +76,7 @@ class DbHandler
         
         @db.execute <<-SQL 
             CREATE TABLE IF NOT EXISTS individual_transactions(
-                id INT NOT NULL,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 product VARCHAR(45) NULL,
                 product_id INT NOT NULL,
                 location VARCHAR(45) NOT NULL,
@@ -89,7 +89,7 @@ class DbHandler
 
         @db.execute <<-SQL 
             CREATE TABLE IF NOT EXISTS mutual_transactions(
-                id INT NOT NULL,
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
                 transaction_id INT NOT NULL,
                 origin_account_id INT NOT NULL,
                 final_account_id INT NOT NULL,

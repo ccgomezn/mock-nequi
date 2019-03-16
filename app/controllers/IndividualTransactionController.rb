@@ -1,37 +1,35 @@
-require_relative '../mutual_transaction_manager'
 
-class MutualTransactionController
+class IndividualTransactionController
 
-  include MutualTransactionManager
-
-  attr_accessor :transaction_id, :origin_account_id, :final_account_id
-
-
-
-  def create(*data)
-
+  def initialize(db_handler)
+    @db_handler = db_handler
   end
 
-  def show(id)
-
+  def consign_to_account(amount, final_account, product, product_id, location)
+    transaction = create_transaction(amount)
+    create_individual_transaction(product, product_id, location, transaction.id,
+                                  final_account)
   end
 
-  def update(id, *data)
+  private
 
+  def create_transaction(amount)
+    transaction_manager = TransactionManager.new(@db_handler)
+    date = DateTime.now
+    date.strftime('%d/%m/%Y %H:%M:%S')
+    data_transaction = { date: date, amout: amount }
+    transaction_manager.insert data_transaction
   end
 
-  def delete(id, *data)
+  def create_individual_transaction(product, product_id, location,
+                                    transaction_id, account_id)
 
+    individual_transaction_manager = IndividualTransactionManager.new(@db_handler)
+    data_individual_transaction = { transaction_id: transaction_id,
+                                    product: product,
+                                    product_id: product_id,
+                                    location: location,
+                                    account_id: account_id }
+    individual_transaction_manager.insert(data_individual_transaction)
   end
-
-  def find(id)
-
-  end
-
-  def list
-
-  end
-
-
-  
 end

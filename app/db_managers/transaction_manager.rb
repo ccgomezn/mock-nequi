@@ -1,5 +1,5 @@
 require_relative '../modules/validate_data'
-require_relative '../models/account'
+require_relative '../models/Transaction'
 require_relative '../modules/sql_query_executor'
 
 class TransactionManager
@@ -14,7 +14,9 @@ class TransactionManager
     def insert(params)
                 
         if valid_data?(params)
-            insert_execution("transactions", params)
+            insert_execution('transactions', params)
+            transaction_id = get_last_register_execution('transactions')
+            params[:id] = transaction_id[0]
             Transaction.new(params)
         else
             print("ERROR: couldn't insert account data")
@@ -22,7 +24,7 @@ class TransactionManager
     end
 
     def find(id)
-        find_execution("transactions", id)
+        find_execution('transactions', id)
         return Transaction.new()
     end
     

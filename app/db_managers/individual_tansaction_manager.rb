@@ -15,7 +15,9 @@ class IndividualTransactionManager
         if valid_data?(params)
             
             insert_execution("individual_transactions", params)
-            return IndividualTransaction.new()
+            individual_transaction = get_last_register_execution('individual_transactions')
+            params[:id] = individual_transaction[0]
+            IndividualTransaction.new(params)
         else
             print("ERROR: couldn't insert account data")
         end
@@ -42,6 +44,8 @@ class IndividualTransactionManager
     private
 
      def valid_data?(params)
+        product_id_valid = params.has_key?(:product_id) ?
+                        number_validation(params[:product_id]) : true
         product_valid = params.has_key?(:product) ?
                         name_validation(params[:product]) : true
         location_valid = params.has_key?(:location) ?
@@ -53,7 +57,7 @@ class IndividualTransactionManager
         
         
 
-        if (id_valid and product_valid and location_valid and \
+        if (product_id_valid and product_valid and location_valid and \
             transaction_id_valid and account_id_valid)
             return true
         else
