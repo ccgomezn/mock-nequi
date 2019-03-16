@@ -1,7 +1,7 @@
 #require_relative '../db_managers/account_manager'
 require_relative '../../db/db_handler'
 require_relative '../modules/sql_query_executor'
-require_relative '../views/principal_menu'
+require_relative '../views/principal_view'
 
 include SqlQueryExecutor
 #initializes the db with the given name and create it if does not exists
@@ -9,8 +9,9 @@ include SqlQueryExecutor
 #@db_handler = DbHandler.new(db_folder_path, "mock_nequi_db.db")
 #@db_handler.create
 
-menu = PrincipalMenu.new()
-menu.show()
+menu = PrincipalView.new()
+#menu = SignUpView.new()
+#menu.show()
 
 #insert_data = {avaiable_balance: 1000, total_balance: 2000, creation_date: "03/06/2019 23:13:20"}
 #update_data = {avaiable_balance: 0}

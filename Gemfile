@@ -6,5 +6,7 @@ source 'https://rubygems.org' do
 
     #cli management
     gem 'terminal-menu'
+
+    gem 'tty-prompt'
 end
   
