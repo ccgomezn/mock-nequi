@@ -1,5 +1,5 @@
 require_relative '../modules/validate_data'
-require_relative '../models/account'
+require_relative '../models/user'
 require_relative '../modules/sql_query_executor'
 
 class UserManager

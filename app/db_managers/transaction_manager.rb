@@ -1,5 +1,5 @@
 require_relative '../modules/validate_data'
-require_relative '../models/Transaction'
+require_relative '../models/transaction'
 require_relative '../modules/sql_query_executor'
 
 class TransactionManager

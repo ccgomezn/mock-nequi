@@ -1,5 +1,5 @@
 require_relative '../modules/validate_data'
-require_relative '../models/account'
+require_relative '../models/goal'
 require_relative '../modules/sql_query_executor'
 
 class GoalManager
@@ -15,21 +15,27 @@ class GoalManager
                 
         if valid_data?(params)
             insert_execution("goals", params)
-            return Goal.new()
+            goal_id = get_last_register_execution('goals')
+            params[:id] = goal_id[0]
+            Goal.new(params)
         else
             print("ERROR: couldn't insert account data")
         end
     end
 
     def find(id)
-        find_execution("goals", id)
-        return Goal.new()
+        data_query = find_execution('goals', id)
+        data_goal = { id: data_query[0], name: data_query[1],
+                      goal: data_query[2], balance: data_query[3],
+                      state: data_query[4], deadline: data_query[5],
+                      creation_date: data_query[6], account_id: data_query[7] }
+        return Goal.new(data_goal)
     end
     
     #UPDATE And DELETE builders need a dict with the columns and values, if empty value = nil
     def update(id, params)
         if valid_data?(params)
-            update_execution("goals", data_dict, id)
+            update_execution("goals", params, id)
         else
             print("ERROR: couldn't insert account data")
         end

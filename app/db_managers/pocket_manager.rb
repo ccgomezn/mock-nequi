@@ -1,5 +1,5 @@
 require_relative '../modules/validate_data'
-require_relative '../models/account'
+require_relative '../models/pocket'
 require_relative '../modules/sql_query_executor'
 
 class PocketManager
@@ -14,23 +14,27 @@ class PocketManager
     def insert(params)
                 
         if valid_data?(params)
-            
-            insert_execution("pockets", params)
-            return Pocket.new()
+            insert_execution('pockets', params)
+            pocket_id = get_last_register_execution('pockets')
+            params[:id] = pocket_id[0]
+            Pocket.new(params)
         else
             print("ERROR: couldn't insert account data")
         end
     end
 
     def find(id)
-        find_execution("pockets", id)
-        return Pocket.new()
+        data_query = find_execution('pockets', id)
+        data_pocket = { id: data_query[0], name: data_query[1],
+                        balance: data_query[2], creation_date: data_query[3],
+                        account_id: data_query[4] }
+        Pocket.new(data_pocket)
     end
     
     #UPDATE And DELETE builders need a dict with the columns and values, if empty value = nil
     def update(id, params)
         if valid_data?(params)
-            update_execution("pockets", params, id)
+            update_execution('pockets', params, id)
         else
             print("ERROR: couldn't insert account data")
         end
@@ -55,8 +59,7 @@ class PocketManager
                            numeric_validation(params[:account_id]) : true
         
 
-        if (name_valid and goal_valid and \
-            balance_valid creation_date_valid and account_id_valid)
+        if (name_valid and goal_valid and balance_valid and creation_date_valid and account_id_valid)
             return true
         else
             return false

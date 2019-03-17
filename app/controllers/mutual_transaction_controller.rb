@@ -48,9 +48,3 @@ class MutualTransactionController
     account_manager.update(final_account_id, data_final_account)
   end
 end
-
-
-
-
-
-

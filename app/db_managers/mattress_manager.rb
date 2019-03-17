@@ -1,5 +1,5 @@
 require_relative '../modules/validate_data'
-require_relative '../models/account'
+require_relative '../models/mattress'
 require_relative '../modules/sql_query_executor'
 
 class MattressManager
@@ -13,16 +13,20 @@ class MattressManager
     def insert(params)
                 
         if valid_data?(params)
-            insert_execution("mattresses", params)
-            return Mattresses.new()
+            insert_execution('mattresses', params)
+            matress_id = get_last_register_execution('mattresses')
+            params[:id] = matress_id[0]
+            Mattress.new(params)
         else
             print("ERROR: couldn't insert account data")
         end
     end
 
     def find(id)
-        find_execution("mattresses", id)
-        return Mattresses.new()
+        data_query = find_execution('mattresses', id)
+        data_mattress = { id: data_query[0], balance: data_query[1],
+                          account_id: data_query[2] }
+        Mattress.new(data_mattress)
     end
     
     #UPDATE And DELETE builders need a dict with the columns and values, if empty value = nil

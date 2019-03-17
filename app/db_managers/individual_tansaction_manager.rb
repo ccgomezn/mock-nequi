@@ -1,5 +1,5 @@
 require_relative '../modules/validate_data'
-require_relative '../models/account'
+require_relative '../models/individual_transaction'
 require_relative '../modules/sql_query_executor'
 
 class IndividualTransactionManager
@@ -45,11 +45,9 @@ class IndividualTransactionManager
 
      def valid_data?(params)
         product_id_valid = params.has_key?(:product_id) ?
-                        number_validation(params[:product_id]) : true
-        product_valid = params.has_key?(:product) ?
-                        name_validation(params[:product]) : true
+                        numeric_validation(params[:product_id]) : true
         location_valid = params.has_key?(:location) ?
-                         name_validation(params[:location]) : true
+                         location_validation(params[:location]) : true
         transaction_id_valid = params.has_key?(:transaction_id) ?
                                numeric_validation(params[:transaction_id]) : true
         account_id_valid = params.has_key?(:account_id) ?
@@ -57,7 +55,7 @@ class IndividualTransactionManager
         
         
 
-        if (product_id_valid and product_valid and location_valid and \
+        if (product_id_valid and location_valid and \
             transaction_id_valid and account_id_valid)
             return true
         else
