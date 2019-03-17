@@ -1,40 +1,31 @@
-require_relative '../pocket_manager'
+require_relative '../db_managers/pocket_manager'
+require_relative '../../db/db_handler'
+require_relative '../models/Pocket'
 
 class PocketController
-
   include PocketManager
 
-  attr_accessor :name, :balance, :creation_date, :account_id
-
-  def initialize(params)
-    @name = params[:name]
-    @balance = params[:balance]
-    @creation_date = params[:creation_date]
-    @account_id = params[:account_id]
+  def initialize(db_handler)
+    @db_handler = db_handler
   end
 
-  def create(*data)
+  pocketManager = PocketManager.new(db_handler)
 
-  end
-
-  def show(id)
-
-  end
-
-  def update(id, *data)
-
-  end
-
-  def delete(id, *data)
-
+  def insert(name, balance, creation_date, account_id)
+    pocket_map = {:name => name, :balance => balance, :creation_date => creation_date, :account_id => account_id}
+    pocketManager.insert(pocket_map)
   end
 
   def find(id)
-
+    pocketManager.find(id)
   end
 
-  def lists
-
+  def update(id, name, balance, creation_date, account_id)
+    pocket_map = {:name => name, :balance => balance, :creation_date => creation_date, :account_id => account_id}
+    pocketManager.update(id, pocket_map)
   end
 
+  def delete(id)
+    pocketManager.delete(id)
+  end
 end

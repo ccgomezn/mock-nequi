@@ -5,6 +5,7 @@ require_relative '../db_managers/goal_manager'
 require_relative '../db_managers/mattress_manager'
 require_relative '../db_managers/pocket_manager'
 require_relative '../../db/db_handler'
+require_relative '../models/individual_transaction'
 
 
 class IndividualTransactionController
@@ -99,4 +100,25 @@ class IndividualTransactionController
                                     account_id: account_id }
     individual_transaction_manager.insert(data_individual_transaction)
   end
+
+  def insert(product, location, transaction_id, account_id)
+    individualTransactionManager = IndividualTransactionManager.new(@db_handler)
+    individual_map = {:product => product, :location => location, :transaction_id => transaction_id, :account_id = account_id}
+    individualTransactionManager.insert(individual_map)
+  end
+
+  def find(id)
+    individualTransactionManager.find(id)
+  end
+
+  def update(id, product, location, transaction_id, account_id)
+    individualTransactionManager = IndividualTransactionManager.new(@db_handler)
+    individual_map = {:product => product, :location => location, :transaction_id => transaction_id, :account_id = account_id}
+    individualTransactionManager.update(id, individual_map)
+  end
+
+  def delete(id)
+    individualTransactionManager.delete(id)
+  end
+
 end
