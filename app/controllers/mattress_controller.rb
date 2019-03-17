@@ -9,9 +9,8 @@ class MatressController
     @db_handler = db_handler
   end
 
-  mattressesManager = MattressesManager.new(db_managers)
-
   def insert(balance, account_id)
+    mattressesManager = MattressesManager.new(@db_managers)
     mattress_map = {:balance => balance, :account_id => account_id}
     mattressesManager.insert(mattress_map)
   end
@@ -21,6 +20,7 @@ class MatressController
   end
 
   def update(id, balance)
+    mattressesManager = MattressesManager.new(@db_managers)
     mattress_map = {:balance => balance, :account_id => account_id}
     mattressesManager.update(id, mattress_map)
   end

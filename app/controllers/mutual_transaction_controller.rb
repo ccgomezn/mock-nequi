@@ -52,7 +52,6 @@ class MutualTransactionController
     account_manager.update(final_account_id, data_final_account)
   end
 
-
     def insert(transaction_id, origin_account_id, final_account_id)
       mutualTransactionManager = MutualTransactionManager.new(@db_handler)
       mutual_map = { transaction_id: transaction_id, origin_account_id: origin_account_id, final_account_id: final_account_id }

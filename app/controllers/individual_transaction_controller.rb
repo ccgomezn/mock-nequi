@@ -101,6 +101,7 @@ class IndividualTransactionController
     individual_transaction_manager.insert(data_individual_transaction)
   end
 
+
   def insert(product, location, transaction_id, account_id)
     individualTransactionManager = IndividualTransactionManager.new(@db_handler)
     individual_map = {:product => product, :location => location, :transaction_id => transaction_id, :account_id = account_id}

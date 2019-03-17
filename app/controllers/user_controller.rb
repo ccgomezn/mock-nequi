@@ -9,9 +9,8 @@ class UserController
     @db_handler = db_handler
   end
 
-  userManager = UserManager.new(db_handler)
-
   def insert(name, email, password_digest, account_id)
+    userManager = UserManager.new(@db_handler)
     user_map = {:name => name, :email => email, :password_digest => password_digest, :account_id => account_id}
     userManager.insert(user_map)
   end
@@ -21,6 +20,7 @@ class UserController
   end
 
   def update(id, name, email, password_digest, account_id)
+    userManager = UserManager.new(@db_handler)
     user_map = {:name => name, :email => email, :password_digest => password_digest, :account_id => account_id}
     userManager.update(id, user_map)
   end

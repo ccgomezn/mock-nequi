@@ -9,9 +9,8 @@ class GoalController
     @db_handler = db_handler
   end
 
-  goalManager = GoalManager.new(db_handler)
-
   def insert(name, goal, balance, state, deadline, creation_date, account_id)
+    goalManager = GoalManager.new(@db_handler)
     goal_map = {:name => name, :goal => goal, :state => state, :deadline => deadline, :creation_date => creation_date, :account_id}
     goalManager.insert(goal_map)
   end
@@ -21,6 +20,7 @@ class GoalController
   end
 
   def update(id, name, goal, balance, state, deadline, creation_date, account_id)
+    goalManager = GoalManager.new(@db_handler)
     goal_map = {:name => name, :goal => goal, :state => state, :deadline => deadline, :creation_date => creation_date, :account_id}
     goalManager.update(id, goal_map)
   end

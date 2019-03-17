@@ -9,9 +9,8 @@ class PocketController
     @db_handler = db_handler
   end
 
-  pocketManager = PocketManager.new(db_handler)
-
   def insert(name, balance, creation_date, account_id)
+    pocketManager = PocketManager.new(@db_handler)
     pocket_map = {:name => name, :balance => balance, :creation_date => creation_date, :account_id => account_id}
     pocketManager.insert(pocket_map)
   end
@@ -21,6 +20,7 @@ class PocketController
   end
 
   def update(id, name, balance, creation_date, account_id)
+    pocketManager = PocketManager.new(@db_handler)
     pocket_map = {:name => name, :balance => balance, :creation_date => creation_date, :account_id => account_id}
     pocketManager.update(id, pocket_map)
   end

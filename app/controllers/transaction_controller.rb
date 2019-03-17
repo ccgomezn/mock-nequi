@@ -9,9 +9,8 @@ class TransactionController
     @db_handler = db_handler
   end
 
-  transactionManager = TransactionManager.new(db_handler)
-
   def insert(date, amount)
+    transactionManager = TransactionManager.new(@db_handler)
     transaction_map = {:date => date, :amount => amount}
     transactionManager.insert(transaction_map)
   end
@@ -21,6 +20,7 @@ class TransactionController
   end
 
   def update(id, date, amount)
+    transactionManager = TransactionManager.new(@db_handler)
     transaction_map = {:date => date, :amount => amount}
     transactionManager.update(id, transaction_map)
   end

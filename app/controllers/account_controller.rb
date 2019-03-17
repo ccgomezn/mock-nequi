@@ -9,9 +9,8 @@ class AccountController
     @db_handler = db_handler
   end
 
-    accountManager = AccountManager.new(db_handler)
-
   def insert(avaiable_balance, total_balance, creation_date)
+    accountManager = AccountManager.new(@db_handler)
     account_map = {:avaiable_balance => avaiable_balance, :total_balance => total_balance, :creation_date => creation_date}
     accountManager.insert(account_map)
   end
@@ -21,6 +20,7 @@ class AccountController
   end
 
   def update(id, avaiable_balance, total_balance, creation_date, creation_date)
+    accountManager = AccountManager.new(@db_handler)
     account_map = {:avaiable_balance => avaiable_balance, :total_balance => total_balance, :creation_date => creation_date}
     accountManager.update(id, account_map)
   end
