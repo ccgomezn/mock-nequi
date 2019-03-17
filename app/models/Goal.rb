@@ -1,7 +1,8 @@
 class Goal
-  attr_accessor  :name, :goal, :balance, :state, :deadline, :creation_date, :account_id
+  attr_accessor :id, :name, :goal, :balance, :state, :deadline, :creation_date, :account_id
 
   def initialize(params)
+    @id = params[:id]
     @name = params[:name]
     @goal = params[:goal]
     @balance = params[:balance]

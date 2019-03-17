@@ -6,9 +6,8 @@ class TransactionController
 
   attr_accessor :date, :amount
 
-  def initialize(params)
-    @date = params[:date]
-    @amount = params[:amount]
+  def initialize(db_handler)
+    @db_handler = db_handler
   end
 
   def create(*data)
@@ -34,5 +33,5 @@ class TransactionController
   def list
 
   end
-
+  
 end

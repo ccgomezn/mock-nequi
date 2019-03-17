@@ -1,25 +1,70 @@
-require_relative '../../db/db_handler'
 require_relative '../modules/validate_data'
-require_relative '../models/account'
+require_relative '../models/goal'
+require_relative '../modules/sql_query_executor'
+
 class GoalManager
     include ValidateData
+    include SqlQueryExecutor
 
     def initialize(db_handler)
-        @db_handler = db_handler
+        @db_handler = db_handler	      
     end
 
-    def valid_data?(*data)
-        id_valid = numeric_validation(data[0])
-        name_valid = name_validation(data[1])
-        goal_valid = numeric_validation(data[2])
-        balance_valid = numeric_validation(data[3])
-        state_valid = name_validation(data[4])
-        deadline_valid = datetime_validation(data[5])
-        creation_date_valid = datetime_validation(data[6])
-        account_id_valid = numeric_validation(data[7])
+
+    def insert(params)
+                
+        if valid_data?(params)
+            insert_execution("goals", params)
+            goal_id = get_last_register_execution('goals')
+            params[:id] = goal_id[0]
+            Goal.new(params)
+        else
+            print("ERROR: couldn't insert account data")
+        end
+    end
+
+    def find(id)
+        data_query = find_execution('goals', id)
+        data_goal = { id: data_query[0], name: data_query[1],
+                      goal: data_query[2], balance: data_query[3],
+                      state: data_query[4], deadline: data_query[5],
+                      creation_date: data_query[6], account_id: data_query[7] }
+        return Goal.new(data_goal)
+    end
+    
+    #UPDATE And DELETE builders need a dict with the columns and values, if empty value = nil
+    def update(id, params)
+        if valid_data?(params)
+            update_execution("goals", params, id)
+        else
+            print("ERROR: couldn't insert account data")
+        end
+    end
+
+    def delete(id)
+        delete_execution("accounts", id)
+    end
+
+    private
+
+    def valid_data?(params)
+        name_valid = params.has_key?(:name) ?
+                     name_validation(params[:name]) : true
+        goal_valid = params.has_key?(:goal) ? 
+                     numeric_validation(params[:goal]) : true
+        balance_valid = params.has_key?(:balance) ? 
+                        numeric_validation(params[:balance]) : true
+        state_valid = params.has_key?(:state) ?
+                      name_validation(params[:state]) : true
+        deadline_valid = params.has_key?(:deadline) ?
+                         datetime_validation(params[:deadline]) : true
+        creation_date_valid = params.has_key?(:creation_date) ?
+                              datetime_validation(params[:creation_date]) : true
+        account_id_valid = params.has_key?(:account_id) ?
+                           numeric_validation(params[:account_id]) : true
         
 
-        if (id_valid and name_valid and goal_valid and \
+        if (name_valid and goal_valid and \
             balance_valid and state_valid and deadline_valid and \
             creation_date_valid and account_id_valid)
             return true
@@ -27,34 +72,5 @@ class GoalManager
             return false
         end
     end
-    
-    def insert(*data)
-                
-        if valid_data?(data)
-             data_dict = {id: data[0], name: data[1], goal: data[2],
-                        balance: data[3], state: data[4], deadline: data[5],
-                        creation_date: data[6], account_id: data[7]}
-            insert_execution("goals", data_dict)
-            return Goal.new()
-        else
-            print("ERROR: couldn't insert account data")
-        end
-    end
 
-    def find(id)
-        find_execution("goals", id)
-        return Goal.new()
-    end
-    
-    #UPDATE And DELETE builders need a dict with the columns and values, if empty value = nil
-    def update(id, *data)
-        data_dict = {name: data[0], goal: data[1],
-                        balance: data[2], state: data[3], deadline: data[4],
-                        creation_date: data[5], account_id: data[6]}
-        update_execution("goals", data_dict, id)
-    end
-
-    def delete(id)
-        delete_execution("accounts", id)
-    end
 end

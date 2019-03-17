@@ -35,7 +35,7 @@ module ValidateData
 
     def datetime_validation(datetime_str)     
         begin 
-            DateTime.strptime(datetime_str, '%m/%d/%Y %T')
+            DateTime.strptime(datetime_str, '%Y-%m-%d %H:%M:%S')
             return true
         rescue
             puts "ERROR: datetime format is not valid"
