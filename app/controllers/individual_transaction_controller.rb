@@ -100,7 +100,7 @@ class IndividualTransactionController
 
   def insert(product, location, transaction_id, account_id)
     individualTransactionManager = IndividualTransactionManager.new(@db_handler)
-    individual_map = {:product => product, :location => location, :transaction_id => transaction_id, :account_id = account_id}
+    individual_map = {:product => product, :location => location, :transaction_id => transaction_id, :account_id => account_id}
     individualTransactionManager.insert(individual_map)
   end
 
@@ -110,7 +110,7 @@ class IndividualTransactionController
 
   def update(id, product, location, transaction_id, account_id)
     individualTransactionManager = IndividualTransactionManager.new(@db_handler)
-    individual_map = {:product => product, :location => location, :transaction_id => transaction_id, :account_id = account_id}
+    individual_map = {:product => product, :location => location, :transaction_id => transaction_id, :account_id => account_id}
     individualTransactionManager.update(id, individual_map)
   end
 

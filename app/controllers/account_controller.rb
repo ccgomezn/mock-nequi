@@ -36,14 +36,15 @@ class AccountController
       account_id,
       location
     )
-
+  end
   
   def find(id)
     @account_manager.find(id)
   end
   
-  def insert(avaiable_balance, total_balance, creation_date)
-    account_map = {:avaiable_balance => avaiable_balance, :total_balance => total_balance, :creation_date => creation_date}
+  def insert(avaiable_balance, total_balance)
+    date = DateTime.now
+    account_map = {:available_balance => avaiable_balance, :total_balance => total_balance, :creation_date => date.strftime('%Y-%m-%d %H:%M:%S')}
     @account_manager.insert(account_map)
   end
     

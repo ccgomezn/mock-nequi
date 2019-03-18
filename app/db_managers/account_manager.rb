@@ -15,7 +15,10 @@ class AccountManager
         if valid_data?(params)
             
             insert_execution("accounts", params)
-            return Account.new()
+            account_id = get_last_register_execution('accounts')
+            params[:id] = account_id[0]
+
+            return Account.new(params)
         else
             print("ERROR: couldn't insert account data")
         end
