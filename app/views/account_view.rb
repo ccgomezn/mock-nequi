@@ -24,7 +24,12 @@ class AccountView
         menu = basic_menu(title)
 
         menu.add('Consultar saldo') do |selected|
-            p selected
+            balance = @account_controller.get_balance()
+            @prompt.ok('Su saldo disponible es: ' + balance[:available].to_s)
+            @prompt.ok('Su saldo total es: ' + balance[:total].to_s)
+                        
+            sleep(2)
+            account_menu()
         end
         menu.add('Cargar cuenta') do |selected|
             transaction_param = ask_params("Valor")

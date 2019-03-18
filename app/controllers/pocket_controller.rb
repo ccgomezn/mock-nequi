@@ -34,6 +34,10 @@ class PocketController
     @pocket_manager.insert(pocket_map)
   end
 
+  def get_balance(product_id)
+    @goal_manager.find(product_id).balance
+  end
+  
   def find(id)
     @pocket_manager.find(id)
   end

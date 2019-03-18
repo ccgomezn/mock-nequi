@@ -27,6 +27,10 @@ class GoalController
     )
   end
 
+  def get_balance(product_id)
+    @goal_manager.find(product_id).balance
+  end
+
   def insert(name, goal, balance, state, deadline, creation_date)
     goal_map = {:name => name, :goal => goal, :state => state, :deadline => deadline, :creation_date => creation_date, :account_id => $session[:account_id]}
     @goal_manager.insert(goal_map)
