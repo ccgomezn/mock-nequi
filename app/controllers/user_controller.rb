@@ -1,39 +1,31 @@
-require_relative '../user_manager'
+require_relative '../db_managers/user_manager'
+require_relative '../../db/db_handler'
+require_relative '../models/User'
 
-class UserController
-
+class UserController
   include UserManager
 
-  attr_accessor :name, :password_digest, :account_id
-
-  def initialize(params)
-    @name = params[:name]
-    @password_digest = params[:password_digest]
-    @account_id = params[:account_id]
+  def initialize(db_handler)
+    @db_handler = db_handler
   end
 
-  def create(*data)
-
-  end
-
-  def show(id)
-
-  end
-
-  def update(id, *data)
-
-  end
-
-  def delete(id, *data)
-
+  def insert(name, email, password_digest, account_id)
+    userManager = UserManager.new(@db_handler)
+    user_map = {:name => name, :email => email, :password_digest => password_digest, :account_id => account_id}
+    userManager.insert(user_map)
   end
 
   def find(id)
-
+    userManager(id)
   end
 
-  def list
-
+  def update(id, name, email, password_digest, account_id)
+    userManager = UserManager.new(@db_handler)
+    user_map = {:name => name, :email => email, :password_digest => password_digest, :account_id => account_id}
+    userManager.update(id, user_map)
   end
 
+  def delete(id)
+    userManager.delete(id)
+  end
 end

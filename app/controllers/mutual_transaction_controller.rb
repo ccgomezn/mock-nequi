@@ -2,9 +2,13 @@ require_relative '../db_managers/transaction_manager'
 require_relative '../db_managers/mutual_transaction_manager'
 require_relative '../db_managers/account_manager'
 require_relative '../../db/db_handler'
+require_relative '../models/mutual_transaction'
+
+
+
 
 class MutualTransactionController
-  
+
   def initialize(db_handler)
     @transaction_manager = TransactionManager.new(db_handler)
     @mutual_transaction_manager = MutualTransactionManager.new(db_handler)
@@ -21,7 +25,7 @@ class MutualTransactionController
 
   def create_transaction(amount)
     date = DateTime.now
-    data_transaction = { date: date.strftime('%Y-%m-%d %H:%M:%S'), 
+    data_transaction = { date: date.strftime('%Y-%m-%d %H:%M:%S'),
                          amount: amount }
     @transaction_manager.insert data_transaction
   end
@@ -46,4 +50,25 @@ class MutualTransactionController
     @account_manager.update(origin_account_id, data_origin_account)
     @account_manager.update(final_account_id, data_final_account)
   end
+
+    def insert(transaction_id, origin_account_id, final_account_id)
+      mutualTransactionManager = MutualTransactionManager.new(@db_handler)
+      mutual_map = { transaction_id: transaction_id, origin_account_id: origin_account_id, final_account_id: final_account_id }
+      mutualTransactionManager.insert(mutual_map)
+    end
+
+    def find(id)
+      mutualTransactionManager.find(id)
+    end
+
+    def update(id, transaction_id, origin_account_id, final_account_id)
+      mutualTransactionManager = MutualTransactionManager.new(@db_handler)
+      mutual_map = { transaction_id: transaction_id, origin_account_id: origin_account_id, final_account_id: final_account_id }
+      mutualTransactionManager.update(id, mutual_map)
+    end
+
+    def delete(id)
+      mutualTransactionManager.delete(id)
+    end
+
 end

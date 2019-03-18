@@ -1,9 +1,10 @@
 class IndividualTransaction
-  attr_accessor :transaction_id, :origin_account_id, :final_account_id
+  attr_accessor :product, :location, :transaction_id, :account_id
 
   def initialize(params)
+    @product = params[:product]
+    @location = params[:location]
     @transaction_id = params[:transaction_id]
-    @origin_account_id = params[:origin_account_id]
-    @final_account_id = params[:final_account_id]
+    @account_id = params[:account_id]
   end
 end
