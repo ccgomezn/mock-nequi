@@ -64,3 +64,4 @@ class UserManager
         end
     end
 end
+
