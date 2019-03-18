@@ -1,14 +1,10 @@
-require_relative '../modules/validate_data'
+require_relative 'helpers/validate_data'
 require_relative '../models/individual_transaction'
-require_relative '../modules/sql_query_executor'
+require_relative 'helpers/sql_query_executor'
 
 class IndividualTransactionManager
     include ValidateData
     include SqlQueryExecutor
-
-    def initialize(db_handler)
-        @db_handler = db_handler	      
-    end
 
     def insert(params)
                 

@@ -3,9 +3,9 @@ require_relative '../db_managers/mattress_manager'
 
 class MattressController
 
-  def initialize(db_handler)
-    @individual_transaction = IndividualTransactionController.new(db_handler)
-    @mattress_manager = MattressManager.new(@db_managers)
+  def initialize()
+    @individual_transaction = IndividualTransactionController.new()
+    @mattress_manager = MattressManager.new()
   end
 
   def debit(amount, account_id, product_id, location)

@@ -1,15 +1,20 @@
-require_relative '../modules/cli_menu_builder'
+require_relative 'helpers/cli_menu_builder'
+require_relative 'helpers/cli_input'
 require_relative 'logged_view'
 require 'tty-prompt'
 
 class AccountView
+    include CliInput
     include CliMenuBuilder
 
     def initialize(account_controller)
         @account_controller = account_controller
+        @prompt = TTY::Prompt.new(help_color: :cyan, active_color: :bright_magenta)
+
         account_menu()
     end
     
+    private
     def account_menu()
         # this is for filling the layout in the description
         # the library don't support inserting text 
@@ -18,11 +23,37 @@ class AccountView
         
         menu = basic_menu(title)
 
-        menu.add('Consignar a cuenta') do |selected|
+        menu.add('Consultar saldo') do |selected|
             p selected
         end
+        menu.add('Cargar cuenta') do |selected|
+            transaction_param = ask_params("Valor")
+            amount = transaction_param["Valor"].to_f
+            @account_controller.debit(amount, 1, "virtual-virtual")
+            @prompt.ok("Carga Exitosa!")
+            
+            sleep(2)
+            account_menu()
+        end
         menu.add('Descargar cuenta') do |selected|
-            p selected
+            transaction_param = ask_params("Valor")
+            amount = transaction_param["Valor"].to_f
+            @account_controller.withdraw(amount, 1, "virtual-virtual")
+            @prompt.ok("Descarga Exitosa!")
+            
+            sleep(2)
+            account_menu()
+        end
+        menu.add('Consignar a otra cuenta') do |selected|
+            transaction_param = ask_params("Valor", "ID de la cuenta")
+            amount = transaction_param["Valor"].to_f
+            final_account_id = transaction_param["ID de la cuenta"].to_i
+            @account_controller.consign_to_another_account(amount, 1, final_account_id)
+            #@account_controller.debit(amount, 1, "virtual-virtual")
+            @prompt.ok("Transacción Exitosa!")
+            
+            sleep(2)
+            account_menu()
         end
         menu.add('Regresar') do |selected|
             LoggedView.new()

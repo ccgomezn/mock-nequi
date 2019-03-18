@@ -1,5 +1,5 @@
-require_relative '../modules/cli_menu_builder'
-require_relative '../modules/cli_input'
+require_relative 'helpers/cli_menu_builder'
+require_relative 'helpers/cli_input'
 require_relative 'logged_view'
 require 'tty-prompt'
 
@@ -9,6 +9,7 @@ class PrincipalView
 
     def initialize()
         @prompt = TTY::Prompt.new(help_color: :cyan, active_color: :bright_magenta)
+        
         principal_menu()
     end
 

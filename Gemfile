@@ -8,5 +8,8 @@ source 'https://rubygems.org' do
     gem 'terminal-menu'
 
     gem 'tty-prompt'
+
+    gem 'solargraph'
+
 end
   

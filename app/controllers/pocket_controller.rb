@@ -3,9 +3,9 @@ require_relative '../db_managers/pocket_manager'
 
 class PocketController
 
-  def initialize(db_handler)
-    @individual_transaction = IndividualTransactionController.new(db_handler)
-    @pocket_manager = PocketManager.new(@db_handler)
+  def initialize()
+    @individual_transaction = IndividualTransactionController.new()
+    @pocket_manager = PocketManager.new()
   end
 
   def debit(amount, account_id, product_id, location)

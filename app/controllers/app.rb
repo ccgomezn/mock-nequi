@@ -1,13 +1,14 @@
 #require_relative '../db_managers/account_manager'
 require_relative '../../db/db_handler'
-require_relative '../modules/sql_query_executor'
+require_relative 'account_controller'
 require_relative '../views/principal_view'
 
-include SqlQueryExecutor
 #initializes the db with the given name and create it if does not exists
-#db_folder_path = "../../db/"
-#@db_handler = DbHandler.new(db_folder_path, "mock_nequi_db.db")
-#@db_handler.create
+db_handler = DbHandler.instance
+$db_connection = db_handler.db
+$db_connection.freeze
+
+#ac.debit(100, 1, "virtual-virtual")
 
 menu = PrincipalView.new()
 #menu = SignUpView.new()

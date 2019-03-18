@@ -1,4 +1,4 @@
-require_relative '../modules/cli_menu_builder'
+require_relative 'helpers/cli_menu_builder'
 require_relative 'logged_view'
 require 'tty-prompt'
 
@@ -10,6 +10,7 @@ class GoalView
         goal_menu()
     end
     
+    private
     def goal_menu()
         # this is for filling the layout in the description
         # the library don't support inserting text 
