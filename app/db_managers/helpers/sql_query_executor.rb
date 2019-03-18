@@ -42,7 +42,7 @@ module SqlQueryExecutor
 
     def execute_query(query, values, query_error)
         begin
-            db = @db_handler.db
+            db = $db_connection
             query_stmt = db.prepare(query)
             response = query_stmt.execute(values)
             response = response.next

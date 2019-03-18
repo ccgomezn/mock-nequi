@@ -1,10 +1,17 @@
 require 'sqlite3'
+require 'singleton'
 
 class DbHandler
+    include Singleton
+
     attr_reader :db
 
-    def initialize(db_folder_path, db_name)
+    def initialize()
+        db_folder_path = "../../db/"
+        db_name = "mock_nequi_db.db"
         @db = connect(db_folder_path, db_name)
+
+        create()
         ObjectSpace.define_finalizer(self, proc { close_connection(@db) })
     end
     

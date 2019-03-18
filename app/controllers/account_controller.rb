@@ -4,10 +4,10 @@ require_relative '../db_managers/account_manager'
 
 class AccountController
 
-  def initialize(db_handler)
-    @individual_transaction = IndividualTransactionController.new(db_handler)
-    @mutual_transaction = MutualTransactionController.new(db_handler)
-    @account_manager = AccountManager.new(db_handler)
+  def initialize()
+    @individual_transaction = IndividualTransactionController.new()
+    @mutual_transaction = MutualTransactionController.new()
+    @account_manager = AccountManager.new()
   end
 
   def consign_to_another_account(amount, origin_account_id, final_account_id)

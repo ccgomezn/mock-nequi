@@ -1,16 +1,11 @@
 require_relative '../db_managers/transaction_manager'
-require_relative '../../db/db_handler'
-require_relative '../models/Transaction'
+require_relative '../models/transaction'
 
 class TransactionController
-  include TransactionManager
 
-  def initialize(db_handler)
-    @db_handler = db_handler
-  end
 
   def insert(date, amount)
-    transactionManager = TransactionManager.new(@db_handler)
+    transactionManager = TransactionManager.new()
     transaction_map = {:date => date, :amount => amount}
     transactionManager.insert(transaction_map)
   end
@@ -20,7 +15,7 @@ class TransactionController
   end
 
   def update(id, date, amount)
-    transactionManager = TransactionManager.new(@db_handler)
+    transactionManager = TransactionManager.new()
     transaction_map = {:date => date, :amount => amount}
     transactionManager.update(id, transaction_map)
   end

@@ -4,19 +4,18 @@ require_relative '../db_managers/account_manager'
 require_relative '../db_managers/goal_manager'
 require_relative '../db_managers/mattress_manager'
 require_relative '../db_managers/pocket_manager'
-require_relative '../../db/db_handler'
 require_relative '../models/individual_transaction'
 
 
 class IndividualTransactionController
 
-  def initialize(db_handler)
-    @account_manager = AccountManager.new(db_handler)
-    @goal_manager = GoalManager.new(db_handler)
-    @mattress_manager = MattressManager.new(db_handler)
-    @pocket_manager = PocketManager.new(db_handler)
-    @transaction_manager = TransactionManager.new(db_handler)
-    @individual_transaction_manager = IndividualTransactionManager.new(db_handler)
+  def initialize()
+    @account_manager = AccountManager.new()
+    @goal_manager = GoalManager.new()
+    @mattress_manager = MattressManager.new()
+    @pocket_manager = PocketManager.new()
+    @transaction_manager = TransactionManager.new()
+    @individual_transaction_manager = IndividualTransactionManager.new()
   end
 
   def transaction_on_account(amount, account_id, product, product_id, location)
@@ -99,7 +98,7 @@ class IndividualTransactionController
 
 
   def insert(product, location, transaction_id, account_id)
-    individualTransactionManager = IndividualTransactionManager.new(@db_handler)
+    individualTransactionManager = IndividualTransactionManager.new()
     individual_map = {:product => product, :location => location, :transaction_id => transaction_id, :account_id => account_id}
     individualTransactionManager.insert(individual_map)
   end
@@ -109,7 +108,7 @@ class IndividualTransactionController
   end
 
   def update(id, product, location, transaction_id, account_id)
-    individualTransactionManager = IndividualTransactionManager.new(@db_handler)
+    individualTransactionManager = IndividualTransactionManager.new()
     individual_map = {:product => product, :location => location, :transaction_id => transaction_id, :account_id => account_id}
     individualTransactionManager.update(id, individual_map)
   end

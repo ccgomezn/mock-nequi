@@ -1,4 +1,4 @@
-require_relative '../modules/cli_menu_builder'
+require_relative 'helpers/cli_menu_builder'
 require_relative 'logged_view'
 require 'tty-prompt'
 
