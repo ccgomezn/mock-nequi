@@ -14,15 +14,19 @@ class UserManager
                 
         if valid_data?(params)
             insert_execution("users", params)
-            return User.new()
+            user_id = get_last_register_execution('users')
+            params[:id] = user_id[0]
+            return User.new(params)
         else
             print("ERROR: couldn't insert account data")
         end
     end
 
     def find(id)
-        find_execution("users", id)
-        return User.new()
+        data_query = find_execution("users", id)
+        data_account = {id: data_query[0], name: data_query[1],
+                        email: data_query[2], account_id: data_query[4]}
+        return User.new(data_account)
     end
     
     #UPDATE And DELETE builders need a dict with the columns and values, if empty value = nil

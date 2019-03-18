@@ -1,10 +1,16 @@
-class User
-    attr_accessor :name, :email, :password_digest, :account_id
-
-    def initialize(params)
-      @name = params[:name]
+class User
+
+
+    attr_accessor :id, :name, :email, :account_id
+
+
+
+    def initialize(params)
+      @id = params[:id]
+      @name = params[:name]
       @email = params[:email]
-      @password_digest = params[:password_digest]
-      @account_id = params[:account_id]
-      end
-end
+      @account_id = params[:account_id]
+    end
+
+end
+
