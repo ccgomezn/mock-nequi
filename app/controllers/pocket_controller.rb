@@ -37,12 +37,14 @@ class PocketController
   def get_balance(product_id)
     @goal_manager.find(product_id).balance
   end
-  
+
   def find(id)
     @pocket_manager.find(id)
   end
 
-  
+  def find_all
+    @pocket_manager.find_all($session[:account_id]).balance
+  end
 
   def delete(id)
     @pocket_manager.delete(id)

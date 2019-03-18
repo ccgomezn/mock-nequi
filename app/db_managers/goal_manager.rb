@@ -17,6 +17,10 @@ class GoalManager
             print("ERROR: couldn't insert account data")
         end
     end
+    
+    def find_all(account_id)
+        find_all_by_column_execution("goals","account_id", account_id)
+    end
 
     def find(id)
         data_query = find_execution('goals', id)
