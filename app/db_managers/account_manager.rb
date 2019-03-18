@@ -13,7 +13,7 @@ class AccountManager
             account_id = get_last_register_execution('accounts')
             params[:id] = account_id[0]
 
-            return Account.new(params)
+            Account.new(params)
         else
             print("ERROR: couldn't insert account data")
         end

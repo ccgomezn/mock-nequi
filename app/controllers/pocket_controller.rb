@@ -8,20 +8,20 @@ class PocketController
     @pocket_manager = PocketManager.new()
   end
 
-  def debit(amount, account_id, product_id, location)
+  def debit(amount, product_id, location)
     @individual_transaction.transaction_on_account(
       amount,
-      account_id,
+      $session[:account_id],
       'pocket',
       product_id,
       location
     )
   end
 
-  def withdraw(amount, account_id, product_id, location)
+  def withdraw(amount, product_id, location)
     @individual_transaction.transaction_on_account(
       - amount,
-      account_id,
+      $session[:account_id],
       'pocket',
       product_id,
       location
@@ -29,8 +29,8 @@ class PocketController
   end
 
 
-  def insert(name, balance, creation_date, account_id)
-    pocket_map = {:name => name, :balance => balance, :creation_date => creation_date, :account_id => account_id}
+  def insert(name, balance, creation_date)
+    pocket_map = {:name => name, :balance => balance, :creation_date => creation_date, :account_id => $session[:account_id]}
     @pocket_manager.insert(pocket_map)
   end
 

@@ -2,6 +2,7 @@ require_relative 'helpers/cli_menu_builder'
 require_relative 'helpers/cli_input'
 require_relative 'logged_view'
 require 'tty-prompt'
+require_relative '../controllers/user_controller'
 
 class PrincipalView
     include CliInput
@@ -9,7 +10,7 @@ class PrincipalView
 
     def initialize()
         @prompt = TTY::Prompt.new(help_color: :cyan, active_color: :bright_magenta)
-        
+        @user_controller = UserController.new()
         principal_menu()
     end
 
@@ -22,11 +23,31 @@ class PrincipalView
         
         menu.add('Crear usuario') do 
             signup_data = ask_params("Name", "Email", "Password")
-            LoggedView.new()
+            if(@user_controller.create(signup_data["Name"],
+                                     signup_data["Email"],
+                                     signup_data["Password"]))
+                @prompt.ok("Creacion exitosa")
+                sleep(2)
+            else
+                @prompt.error("Creacion fallida")
+                sleep(2)
+            end
+            PrincipalView.new()
         end
         menu.add('Entrar') do |selected|
             login_data = ask_params("Email", "Password")
-            LoggedView.new()
+            if(@user_controller.login(login_data["Email"],
+                                      login_data["Password"]))
+                @prompt.ok("Ingreso correcto")
+                sleep(2)
+
+                LoggedView.new()
+            else
+                @prompt.error("Credenciales invalidas")
+            
+                sleep(2)
+                PrincipalView.new()
+            end
         end
         
         menu.show

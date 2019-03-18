@@ -24,11 +24,9 @@ class LoggedView
         # the library don't support inserting text 
         title = "Bienvenid@ a tu cuenta nequi!"
         title = title.center(title.length + 40)
-        blankspace = " "
-        description = "Saldo total: " + blankspace*56 
-        description += "\n Saldo disponible: " + blankspace*50
+        
 
-        menu = basic_menu(title, description)
+        menu = basic_menu(title)
 
         menu.add('Cuenta de ahorros') do |selected|
             account_controller = AccountController.new()

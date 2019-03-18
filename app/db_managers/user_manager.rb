@@ -12,9 +12,9 @@ class UserManager
             insert_execution("users", params)
             user_id = get_last_register_execution('users')
             params[:id] = user_id[0]
-            return User.new(params)
+            User.new(params)
         else
-            print("ERROR: couldn't insert account data")
+            puts("ERROR: couldn't insert account data")
         end
     end
 
@@ -30,7 +30,7 @@ class UserManager
         if valid_data?(params)
             update_execution("users", params, id)
         else
-            print("ERROR: couldn't insert account data")
+            false
         end
     end
 
@@ -38,22 +38,31 @@ class UserManager
         delete_execution("users", id)
     end
 
+    def login(email, password)
+        data_query = find_by_column_execution("users", "email", email)
+        
+        
+        if(data_query[3] == password)
+            return {account_id: data_query[4], state: true}
+        end
+        return {state: false}
+    end
+
     private
 
-     def valid_data?(*data)
+     def valid_data?(params)
         name_valid = params.has_key?(:name) ?
                      name_validation(params[:name]) : true
         email_valid = params.has_key?(:email) ?
-                      name_validation(params[:email]) : true
-        password_digest_valid = params.has_key?(:password_digest) ?
-                                name_validation(params[:password_digest]) : true
+                      email_validation(params[:email]) : true
+        
         account_id_valid = params.has_key?(:account_id) ?
                            numeric_validation(params[:account_id]) : true
         
         
 
         if (name_valid and email_valid and \
-            password_digest_valid and account_id_valid)
+             account_id_valid)
             return true
         else
             return false
