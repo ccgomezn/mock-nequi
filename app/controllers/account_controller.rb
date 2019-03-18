@@ -1,39 +1,31 @@
-require_relative '../db_manager/account_manager'
+require_relative '../db_managers/account_manager'
+require_relative '../../db/db_handler'
+require_relative '../models/Account'
 
 class AccountController
-
   include AccountManager
 
-  attr_accessor :avaiable_balance, :total_balance, :creation_date
-
-  def initialize(params)
-    @avaiable_balance = params[:avaiable_balance]
-    @total_balance = params[:total_balance]
-    @creation_date = params[:creation_date]
+  def initialize(db_handler)
+    @db_handler = db_handler
   end
 
-  def create(*data)
-
-  end
-
-  def show(id)
-
-  end
-
-  def updatet(id, *data)
-
-  end
-
-  def delete(id, *data)
-
+  def insert(avaiable_balance, total_balance, creation_date)
+    accountManager = AccountManager.new(@db_handler)
+    account_map = {:avaiable_balance => avaiable_balance, :total_balance => total_balance, :creation_date => creation_date}
+    accountManager.insert(account_map)
   end
 
   def find(id)
-
+    accountManager.find(id)
   end
 
-  def list
-
+  def update(id, avaiable_balance, total_balance, creation_date, creation_date)
+    accountManager = AccountManager.new(@db_handler)
+    account_map = {:avaiable_balance => avaiable_balance, :total_balance => total_balance, :creation_date => creation_date}
+    accountManager.update(id, account_map)
   end
 
+  def delete(id)
+    accountManager.delete(id)
+  end
 end

@@ -1,38 +1,31 @@
-require_relative '../mattresses_manager'
+require_relative '../db_managers/mattress_manager'
+require_relative '../../db/db_handler'
+require_relative '../models/Mattress'
 
 class MatressController
-
   include MattressesManager
 
-  attr_accessor :balance, :account_id
-
-  def initialize(params)
-    @balance = params[:balance]
-    @account_id = params[:account_id]
+  def initialize(db_handler)
+    @db_handler = db_handler
   end
 
-  def create(*data)
-
-  end
-
-  def show(id)
-
-  end
-
-  def update(id, *data)
-
-  end
-
-  def delete(id, *data)
-
+  def insert(balance, account_id)
+    mattressesManager = MattressesManager.new(@db_managers)
+    mattress_map = {:balance => balance, :account_id => account_id}
+    mattressesManager.insert(mattress_map)
   end
 
   def find(id)
-
+    mattressesManager.find(id)
   end
 
-  def list
-
+  def update(id, balance)
+    mattressesManager = MattressesManager.new(@db_managers)
+    mattress_map = {:balance => balance, :account_id => account_id}
+    mattressesManager.update(id, mattress_map)
   end
 
+  def delete(id)
+    mattressesManager.delete(id)
+  end
 end
