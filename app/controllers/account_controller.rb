@@ -16,22 +16,22 @@ class AccountController
     )
   end
 
-  def debit(amount, account_id, product_id, location)
+  def debit(amount, account_id, location)
     @individual_transaction.transaction_on_account(
       amount,
       account_id,
       'account',
-      product_id,
+      account_id,
       location
     )
   end
 
-  def withdraw(amount, account_id, product_id, location)
+  def withdraw(amount, account_id, location)
     @individual_transaction.transaction_on_account(
       - amount,
       account_id,
       'account',
-      product_id,
+      account_id,
       location
     )
   end
