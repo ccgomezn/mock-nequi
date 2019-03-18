@@ -2,9 +2,9 @@ require_relative './individual_transaction_controller'
 require_relative '../db_managers/goal_manager'
 
 class GoalController
-  def initialize(db_connection)
-    @individual_transaction = IndividualTransactionController.new(db_connection)
-    @goal_manager = GoalManager.new(db_connection)
+  def initialize()
+    @individual_transaction = IndividualTransactionController.new()
+    @goal_manager = GoalManager.new()
   end
 
   def debit(amount, product_id, location)
