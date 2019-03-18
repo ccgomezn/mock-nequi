@@ -1,38 +1,27 @@
-require_relative '../mattresses_manager'
+require_relative './individual_transaction_controller'
+class MattressController
 
-class MatressController
-
-  include MattressesManager
-
-  attr_accessor :balance, :account_id
-
-  def initialize(params)
-    @balance = params[:balance]
-    @account_id = params[:account_id]
+  def initialize(db_handler)
+    @individual_transaction = IndividualTransactionController.new(db_handler)
   end
 
-  def create(*data)
-
+  def debit(amount, account_id, product_id, location)
+    @individual_transaction.transaction_on_account(
+      amount,
+      account_id,
+      'mattress',
+      product_id,
+      location
+    )
   end
 
-  def show(id)
-
+  def withdraw(amount, account_id, product_id, location)
+    @individual_transaction.transaction_on_account(
+      - amount,
+      account_id,
+      'mattress',
+      product_id,
+      location
+    )
   end
-
-  def update(id, *data)
-
-  end
-
-  def delete(id, *data)
-
-  end
-
-  def find(id)
-
-  end
-
-  def list
-
-  end
-
 end

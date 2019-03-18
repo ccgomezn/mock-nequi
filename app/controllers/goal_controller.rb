@@ -1,43 +1,26 @@
-require_relative '../goal_manager'
-
+require_relative './individual_transaction_controller'
 class GoalController
-
-  include GoalManager
-
-  attr_accessor :name, :goal, :balance, :state, :deadline, :creation_date, :account_id
-
-  def initialize(params)
-    @name = params[:name]
-    @goal = params[:goal]
-    @balance = params[:balance]
-    @state = params[:state]
-    @deadline = params[:deadline]
-    @creation_date = params[:creation_date]
-    @account_id = params[:account_id]
+  def initialize(db_handler)
+    @individual_transaction = IndividualTransactionController.new(db_handler)
   end
 
-  def create(*data)
-
+  def debit(amount, account_id, product_id, location)
+    @individual_transaction.transaction_on_account(
+      amount,
+      account_id,
+      'goal',
+      product_id,
+      location
+    )
   end
 
-  def show(id)
-
+  def withdraw(amount, account_id, product_id, location)
+    @individual_transaction.transaction_on_account(
+      - amount,
+      account_id,
+      'goal',
+      product_id,
+      location
+    )
   end
-
-  def update(id, *data)
-
-  end
-
-  def delete(id, *data)
-
-  end
-
-  def find(id)
-
-  end
-
-  def list
-
-  end
-
 end
