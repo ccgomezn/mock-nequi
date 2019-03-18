@@ -53,7 +53,7 @@ class AccountController
   
   def insert(avaiable_balance, total_balance)
     date = DateTime.now
-    account_map = {:avaiable_balance => avaiable_balance, :total_balance => total_balance, :creation_date => date.strftime('%Y-%m-%d %H:%M:%S')}
+    account_map = {:available_balance => avaiable_balance, :total_balance => total_balance, :creation_date => date.strftime('%Y-%m-%d %H:%M:%S')}
     account = @account_manager.insert(account_map)
     @mattress_manager.insert({balance: 0, account_id: account.id})
   end
