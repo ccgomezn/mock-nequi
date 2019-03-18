@@ -7,28 +7,28 @@ class GoalController
     @goal_manager = GoalManager.new(db_connection)
   end
 
-  def debit(amount, account_id, product_id, location)
+  def debit(amount, product_id, location)
     @individual_transaction.transaction_on_account(
       amount,
-      account_id,
+      $session[:account_id],
       'goal',
       product_id,
       location
     )
   end
 
-  def withdraw(amount, account_id, product_id, location)
+  def withdraw(amount, product_id, location)
     @individual_transaction.transaction_on_account(
       - amount,
-      account_id,
+      $session[:account_id],
       'goal',
       product_id,
       location
     )
   end
 
-  def insert(name, goal, balance, state, deadline, creation_date, account_id)
-    goal_map = {:name => name, :goal => goal, :state => state, :deadline => deadline, :creation_date => creation_date, :account_id => account_id}
+  def insert(name, goal, balance, state, deadline, creation_date)
+    goal_map = {:name => name, :goal => goal, :state => state, :deadline => deadline, :creation_date => creation_date, :account_id => $session[:account_id]}
     @goal_manager.insert(goal_map)
   end
 

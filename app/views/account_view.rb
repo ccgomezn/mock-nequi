@@ -29,7 +29,7 @@ class AccountView
         menu.add('Cargar cuenta') do |selected|
             transaction_param = ask_params("Valor")
             amount = transaction_param["Valor"].to_f
-            @account_controller.debit(amount, 1, "virtual-virtual")
+            @account_controller.debit(amount, "virtual-virtual")
             @prompt.ok("Carga Exitosa!")
             
             sleep(2)
@@ -38,7 +38,7 @@ class AccountView
         menu.add('Descargar cuenta') do |selected|
             transaction_param = ask_params("Valor")
             amount = transaction_param["Valor"].to_f
-            @account_controller.withdraw(amount, 1, "virtual-virtual")
+            @account_controller.withdraw(amount, "virtual-virtual")
             @prompt.ok("Descarga Exitosa!")
             
             sleep(2)
@@ -48,7 +48,7 @@ class AccountView
             transaction_param = ask_params("Valor", "ID de la cuenta")
             amount = transaction_param["Valor"].to_f
             final_account_id = transaction_param["ID de la cuenta"].to_i
-            @account_controller.consign_to_another_account(amount, 1, final_account_id)
+            @account_controller.consign_to_another_account(amount, final_account_id)
             #@account_controller.debit(amount, 1, "virtual-virtual")
             @prompt.ok("Transacción Exitosa!")
             

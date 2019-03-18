@@ -11,6 +11,12 @@ module SqlQueryExecutor
         execute_query(find_query, id, find_error())
     end
 
+    def find_by_column_execution(table_name, column, data)
+        find_query = find_query_by_column(table_name, column)
+
+        execute_query(find_query, data, find_error())
+    end
+
     def insert_execution(table_name, data)
         columns = data.keys
         values = data.values

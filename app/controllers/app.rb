@@ -3,10 +3,12 @@ require_relative '../../db/db_handler'
 require_relative 'account_controller'
 require_relative '../views/principal_view'
 
+$session = {}
 #initializes the db with the given name and create it if does not exists
 db_handler = DbHandler.instance
 $db_connection = db_handler.db
 $db_connection.freeze
+
 
 #ac.debit(100, 1, "virtual-virtual")
 
