@@ -3,41 +3,41 @@ require_relative 'helpers/cli_input'
 require_relative 'logged_view'
 require_relative 'pocket_view'
 require_relative 'list_pocket_view'
-require_relative 'principal_pocket_view'
 require 'tty-prompt'
 
-class ListPocketView
-    include CliInput
+class PocketTransactionView
     include CliMenuBuilder
 
-    def initialize(pocket_controller)
+    def initialize(pocket_controller, pocket)
         @pocket_controller = pocket_controller
+        @pocket = pocket
 
-        list_pocket_menu()
+        pocket_transaction_menu()
     end
     
     private
-    def list_pocket_menu()
+    def pocket_transaction_menu()
         # this is for filling the layout in the description
         # the library don't support inserting text 
-        title = "Mis Bolsillos"
-        title = title.center(title.length + 55)
+        title = @pocket["name"]
+        title = title.center(title.length + 45)
 
         menu = basic_menu(title)
         
-        pockets = @pocket_controller.find_all()
-
-        pockets.each do |pocket|
-            name = pocket["name"]
-
-            menu.add(name)
-                PocketTransactionView.new(@pocket_controller, pocket)
-            end
+        
+        menu.add('Cargar bolsillo') do
+            
+        end
+        menu.add('Descargar bolsillo') do
+            
+        end
+        menu.add('Eliminar bolsillo') do
+        
         end
         menu.add('Regresar') do
-            PrincipalPocketView.new(@pocket_controller)
+            ListPocketView.new()
         end
-
+        
         menu.show
     end
 end

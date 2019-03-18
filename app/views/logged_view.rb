@@ -25,7 +25,6 @@ class LoggedView
         title = "Bienvenid@ a tu cuenta nequi!"
         title = title.center(title.length + 40)
         
-
         menu = basic_menu(title)
 
         menu.add('Cuenta de ahorros') do |selected|
