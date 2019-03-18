@@ -17,7 +17,9 @@ class PocketManager
             print("ERROR: couldn't insert account data")
         end
     end
-
+  def find_all(account_id)
+        find_all_by_column_execution("pockets","account_id", account_id)
+    end
     def find(id)
         data_query = find_execution('pockets', id)
         data_pocket = { id: data_query[0], name: data_query[1],

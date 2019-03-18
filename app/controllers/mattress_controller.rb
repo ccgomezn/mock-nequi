@@ -30,9 +30,11 @@ class MattressController
 
 
   def get_balance(product_id)
-    @goal_manager.find(product_id).balance
+    @mattress_manager.find(product_id).balance
   end
-  
+
+
+
   def insert(balance)
     mattress_map = {:balance => balance, :account_id => $session[:account_id]}
     @mattress_manager.insert(mattress_map)

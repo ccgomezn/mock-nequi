@@ -8,10 +8,23 @@ module SqlQueryExecutor
     def find_execution(table_name, id)
         find_query = find_query(table_name)
 
-        execute_query(find_query, id, find_error())
+        execute_query(find_query, id, find_error())[0]
+    end
+
+    def find_all(table_name)
+        find_all_query = find_all_query(table_name)
+
+        execute_query(find_all_query, [], find_error())
+
     end
 
     def find_by_column_execution(table_name, column, data)
+        find_query = find_query_by_column(table_name, column)
+
+        execute_query(find_query, data, find_error())[0]
+    end
+
+     def find_all_by_column_execution(table_name, column, data)
         find_query = find_query_by_column(table_name, column)
 
         execute_query(find_query, data, find_error())
@@ -42,22 +55,28 @@ module SqlQueryExecutor
 
     def get_last_register_execution(table_name)
         get_last_register = get_last_register_query(table_name)
-        execute_query(get_last_register, [], find_error())
+        execute_query(get_last_register, [], find_error())[0]
 
     end
 
     def execute_query(query, values, query_error)
         begin
+            data = []
             db = $db_connection
+
             query_stmt = db.prepare(query)
+
             response = query_stmt.execute(values)
-            response = response.next
+            response.each do |row|
+                data.push(row)
+            end
         rescue SQLite3::Exception => sql_error
             puts(query_error)
             puts(sql_error)
         ensure
+
             stmt_close(query_stmt)
-            return response
+            return data
         end
     end
 
