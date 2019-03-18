@@ -17,6 +17,12 @@ module SqlQueryExecutor
         execute_query(find_query, data, find_error())
     end
 
+    def find_all_execution(table_name)
+        find_query = find_all_query(table_name)
+
+        execute_query(find_query, [], find_error())
+    end
+
     def insert_execution(table_name, data)
         columns = data.keys
         values = data.values

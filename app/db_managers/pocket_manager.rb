@@ -26,6 +26,10 @@ class PocketManager
         Pocket.new(data_pocket)
     end
     
+    def find_all()
+        data_query = find_all_execution('pockets')
+    end
+
     #UPDATE And DELETE builders need a dict with the columns and values, if empty value = nil
     def update(id, params)
         if valid_data?(params)

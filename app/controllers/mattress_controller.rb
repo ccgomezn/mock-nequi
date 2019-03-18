@@ -29,8 +29,8 @@ class MattressController
   end
 
 
-  def get_balance(product_id)
-    @goal_manager.find(product_id).balance
+  def get_balance()
+    @mattress_manager.find($session[:account_id]).balance
   end
   
   def insert(balance)

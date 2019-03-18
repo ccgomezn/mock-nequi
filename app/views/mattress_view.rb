@@ -23,7 +23,11 @@ class MattressView
         menu = basic_menu(title)
 
         menu.add('Consultar saldo') do |selected|
-            p selected
+            balance = @mattress_controller.get_balance()
+            @prompt.ok('El saldo del colchon es: ' + balance.to_s)
+                        
+            sleep(2)
+            mattress_menu()
         end
         menu.add('Cargar colchon') do |selected|
             transaction_param = ask_params("Valor")

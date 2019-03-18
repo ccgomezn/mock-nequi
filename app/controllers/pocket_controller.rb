@@ -28,8 +28,8 @@ class PocketController
     )
   end
 
-
-  def insert(name, balance, creation_date)
+  def insert(name, balance)
+    creation_date = DateTime.now
     pocket_map = {:name => name, :balance => balance, :creation_date => creation_date, :account_id => $session[:account_id]}
     @pocket_manager.insert(pocket_map)
   end

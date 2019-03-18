@@ -2,6 +2,7 @@
 require_relative '../../db/db_handler'
 require_relative 'account_controller'
 require_relative '../views/principal_view'
+require_relative 'pocket_controller'
 
 $session = {}
 #initializes the db with the given name and create it if does not exists
@@ -9,10 +10,12 @@ db_handler = DbHandler.instance
 $db_connection = db_handler.db
 $db_connection.freeze
 
+pc = PocketController.new()
+pc.find_all()
 
 #ac.debit(100, 1, "virtual-virtual")
 
-menu = PrincipalView.new()
+#menu = PrincipalView.new()
 #menu = SignUpView.new()
 #menu.show()
 
