@@ -28,7 +28,7 @@ class MattressView
         menu.add('Cargar colchon') do |selected|
             transaction_param = ask_params("Valor")
             amount = transaction_param["Valor"].to_f
-            @mattress_controller.debit(amount, 1, 1, "virtual-virtual")
+            @mattress_controller.debit(amount, 1, "virtual-virtual")
             @prompt.ok("Carga Exitosa!")
             
             sleep(2)
@@ -37,7 +37,7 @@ class MattressView
         menu.add('Descargar colchon') do |selected|
             transaction_param = ask_params("Valor")
             amount = transaction_param["Valor"].to_f
-            @mattress_controller.withdraw(amount, 1, 1, "virtual-virtual")
+            @mattress_controller.withdraw(amount, 1, "virtual-virtual")
             @prompt.ok("Descarga Exitosa!")
             
             sleep(2)
