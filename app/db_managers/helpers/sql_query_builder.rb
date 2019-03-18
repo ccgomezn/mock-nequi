@@ -4,6 +4,10 @@ module SqlQueryBuilder
         find_query = "SELECT * FROM #{table_name} WHERE #{table_name}.id = ?"
     end
 
+    def find_all_query(table_name)
+        find_query = "SELECT * FROM #{table_name}"
+    end
+
     def find_query_by_column(table_name, column)
         find_query = "SELECT * FROM #{table_name} WHERE #{table_name}.#{column} = ?"
     end
