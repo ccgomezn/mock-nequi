@@ -27,10 +27,10 @@ class PrincipalView
                                      signup_data["Email"],
                                      signup_data["Password"]))
                 @prompt.ok("Creacion exitosa")
-                sleep(2)
+                sleep(1)
             else
                 @prompt.error("Creacion fallida")
-                sleep(2)
+                sleep(1)
             end
             PrincipalView.new()
         end
@@ -39,13 +39,13 @@ class PrincipalView
             if(@user_controller.login(login_data["Email"],
                                       login_data["Password"]))
                 @prompt.ok("Ingreso correcto")
-                sleep(2)
+                sleep(1)
 
                 LoggedView.new()
             else
                 @prompt.error("Credenciales invalidas")
             
-                sleep(2)
+                sleep(1)
                 PrincipalView.new()
             end
         end

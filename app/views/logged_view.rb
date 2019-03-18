@@ -5,7 +5,7 @@ require_relative 'goal_view'
 require_relative '../controllers/goal_controller'
 require_relative 'mattress_view'
 require_relative '../controllers/mattress_controller'
-require_relative 'list_pocket_view'
+require_relative 'principal_pocket_view'
 require_relative '../controllers/pocket_controller'
 require_relative 'transaction_view'
 require_relative '../controllers/transaction_controller'
@@ -45,7 +45,7 @@ class LoggedView
         end
         menu.add('Bolsillos') do |selected|
             pocket_controller = PocketController.new()
-            ListPocketView.new(pocket_controller)
+            PrinpalPocketView.new(pocket_controller)
         end
         menu.add('Regresar') do |selected|
             PrincipalView.new()

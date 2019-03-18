@@ -1,8 +1,6 @@
 require_relative 'helpers/cli_menu_builder'
 require_relative 'helpers/cli_input'
 require_relative 'logged_view'
-require_relative 'pocket_view'
-require_relative 'list_pocket_view'
 require_relative 'principal_pocket_view'
 require 'tty-prompt'
 
@@ -30,7 +28,7 @@ class ListPocketView
         pockets.each do |pocket|
             name = pocket["name"]
 
-            menu.add(name)
+            menu.add(name) do
                 PocketTransactionView.new(@pocket_controller, pocket)
             end
         end
