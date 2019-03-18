@@ -1,7 +1,6 @@
 require_relative 'helpers/cli_menu_builder'
 require_relative 'helpers/cli_input'
 require_relative 'logged_view'
-require_relative 'pocket_view'
 require_relative 'list_pocket_view'
 require 'tty-prompt'
 

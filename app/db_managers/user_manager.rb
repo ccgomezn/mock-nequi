@@ -40,7 +40,9 @@ class UserManager
 
     def login(email, password)
         data_query = find_by_column_execution("users", "email", email)
-        
+        if data_query === nil
+            return {state: false}
+        end
         
         if(data_query[3] == password)
             return {account_id: data_query[4], state: true}
