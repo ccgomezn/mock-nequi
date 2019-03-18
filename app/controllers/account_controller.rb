@@ -43,7 +43,7 @@ class AccountController
   def get_balance()
     data = {}
     data[:available] = @account_manager.find($session[:account_id]).avaiable_balance
-    data[:total] = @account_manager.find($session[:account_id]).avaiable_balance
+    data[:total] = @account_manager.find($session[:account_id]).total_balance
     data
   end
 
