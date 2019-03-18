@@ -25,6 +25,9 @@ class AccountView
 
         menu.add('Consultar saldo') do |selected|
             p selected
+
+            sleep(4)
+            account_menu()
         end
         menu.add('Cargar cuenta') do |selected|
             transaction_param = ask_params("Valor")
@@ -49,7 +52,6 @@ class AccountView
             amount = transaction_param["Valor"].to_f
             final_account_id = transaction_param["ID de la cuenta"].to_i
             @account_controller.consign_to_another_account(amount, final_account_id)
-            #@account_controller.debit(amount, 1, "virtual-virtual")
             @prompt.ok("Transacción Exitosa!")
             
             sleep(2)
