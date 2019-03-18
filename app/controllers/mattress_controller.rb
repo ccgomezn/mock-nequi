@@ -1,31 +1,43 @@
+require_relative './individual_transaction_controller'
 require_relative '../db_managers/mattress_manager'
-require_relative '../../db/db_handler'
-require_relative '../models/Mattress'
 
-class MatressController
-  include MattressesManager
+class MattressController
 
   def initialize(db_handler)
-    @db_handler = db_handler
+    @individual_transaction = IndividualTransactionController.new(db_handler)
+    @mattress_manager = MattressManager.new(@db_managers)
+  end
+
+  def debit(amount, account_id, product_id, location)
+    @individual_transaction.transaction_on_account(
+      amount,
+      account_id,
+      'mattress',
+      product_id,
+      location
+    )
+  end
+
+  def withdraw(amount, account_id, product_id, location)
+    @individual_transaction.transaction_on_account(
+      - amount,
+      account_id,
+      'mattress',
+      product_id,
+      location
+    )
   end
 
   def insert(balance, account_id)
-    mattressesManager = MattressesManager.new(@db_managers)
     mattress_map = {:balance => balance, :account_id => account_id}
-    mattressesManager.insert(mattress_map)
+    @mattress_manager.insert(mattress_map)
   end
 
   def find(id)
-    mattressesManager.find(id)
-  end
-
-  def update(id, balance)
-    mattressesManager = MattressesManager.new(@db_managers)
-    mattress_map = {:balance => balance, :account_id => account_id}
-    mattressesManager.update(id, mattress_map)
+    @mattress_manager.find(id)
   end
 
   def delete(id)
-    mattressesManager.delete(id)
+    @mattress_manager.delete(id)
   end
 end

@@ -1,31 +1,46 @@
+require_relative './individual_transaction_controller'
 require_relative '../db_managers/pocket_manager'
-require_relative '../../db/db_handler'
-require_relative '../models/Pocket'
 
 class PocketController
-  include PocketManager
 
   def initialize(db_handler)
-    @db_handler = db_handler
+    @individual_transaction = IndividualTransactionController.new(db_handler)
+    @pocket_manager = PocketManager.new(@db_handler)
   end
 
+  def debit(amount, account_id, product_id, location)
+    @individual_transaction.transaction_on_account(
+      amount,
+      account_id,
+      'pocket',
+      product_id,
+      location
+    )
+  end
+
+  def withdraw(amount, account_id, product_id, location)
+    @individual_transaction.transaction_on_account(
+      - amount,
+      account_id,
+      'pocket',
+      product_id,
+      location
+    )
+  end
+
+
   def insert(name, balance, creation_date, account_id)
-    pocketManager = PocketManager.new(@db_handler)
     pocket_map = {:name => name, :balance => balance, :creation_date => creation_date, :account_id => account_id}
-    pocketManager.insert(pocket_map)
+    @pocket_manager.insert(pocket_map)
   end
 
   def find(id)
-    pocketManager.find(id)
+    @pocket_manager.find(id)
   end
 
-  def update(id, name, balance, creation_date, account_id)
-    pocketManager = PocketManager.new(@db_handler)
-    pocket_map = {:name => name, :balance => balance, :creation_date => creation_date, :account_id => account_id}
-    pocketManager.update(id, pocket_map)
-  end
+  
 
   def delete(id)
-    pocketManager.delete(id)
+    @pocket_manager.delete(id)
   end
 end
