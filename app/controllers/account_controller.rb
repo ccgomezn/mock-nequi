@@ -20,7 +20,7 @@ class AccountController
     )
   end
 
-  def debit(amount, location)
+  def debit(amount, location = "virtual-virtual")
     @individual_transaction.transaction_on_account(
       amount,
       $session[:account_id],
@@ -30,7 +30,7 @@ class AccountController
     )
   end
 
-  def withdraw(amount, location)
+  def withdraw(amount, location = "virtual-virtual")
     @individual_transaction.transaction_on_account(
       - amount,
       $session[:account_id],

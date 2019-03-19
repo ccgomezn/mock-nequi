@@ -27,8 +27,11 @@ class ListPocketView
         pockets = @pocket_controller.find_all()
         pockets.each do |pocket|
             name = pocket[1]
+            pocket_id = pocket[0]
+            balance = @pocket_controller.get_balance(pocket_id)
+            space = " "
 
-            menu.add(name) do
+            menu.add(name + space*15 + "Saldo actual: #{balance}") do
                 PocketTransactionView.new(@pocket_controller, pocket)
             end
         end

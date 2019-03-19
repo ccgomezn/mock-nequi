@@ -28,25 +28,25 @@ class AccountView
             @prompt.ok('Su saldo disponible es: ' + balance[:available].to_s)
             @prompt.ok('Su saldo total es: ' + balance[:total].to_s)
                         
-            sleep(2)
+            sleep(3)
             account_menu()
         end
         menu.add('Cargar cuenta') do |selected|
             transaction_param = ask_params("Valor")
             amount = transaction_param["Valor"].to_f
-            @account_controller.debit(amount, "virtual-virtual")
+            @account_controller.debit(amount)
             @prompt.ok("Carga Exitosa!")
             
-            sleep(2)
+            sleep(1)
             account_menu()
         end
         menu.add('Descargar cuenta') do |selected|
             transaction_param = ask_params("Valor")
             amount = transaction_param["Valor"].to_f
-            @account_controller.withdraw(amount, "virtual-virtual")
+            @account_controller.withdraw(amount)
             @prompt.ok("Descarga Exitosa!")
             
-            sleep(2)
+            sleep(1)
             account_menu()
         end
         menu.add('Consignar a otra cuenta') do |selected|
@@ -56,7 +56,7 @@ class AccountView
             @account_controller.consign_to_another_account(amount, final_account_id)
             @prompt.ok("Transacción Exitosa!")
             
-            sleep(2)
+            sleep(1)
             account_menu()
         end
         menu.add('Regresar') do |selected|

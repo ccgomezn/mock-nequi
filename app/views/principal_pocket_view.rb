@@ -25,9 +25,9 @@ class PrincipalPocketView
         menu = basic_menu(title)
         
         menu.add('Crear bolsillo') do
-            pocket_data = ask_params("Name")
+            name = ask_valid_string("Name")
             
-            if @pocket_controller.create(pocket_data["Name"])
+            if @pocket_controller.create(name)
                 @prompt.ok("Creacion exitosa")
                 sleep(1)
             else

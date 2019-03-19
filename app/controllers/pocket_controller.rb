@@ -8,7 +8,7 @@ class PocketController
     @pocket_manager = PocketManager.new()
   end
 
-  def debit(amount, product_id, location)
+  def debit(amount, product_id, location = "virtual-virtual")
     @individual_transaction.transaction_on_account(
       amount,
       $session[:account_id],
@@ -18,7 +18,7 @@ class PocketController
     )
   end
 
-  def withdraw(amount, product_id, location)
+  def withdraw(amount, product_id, location = "virtual-virtual")
     @individual_transaction.transaction_on_account(
       - amount,
       $session[:account_id],
@@ -37,7 +37,7 @@ class PocketController
   end
 
   def get_balance(product_id)
-    @goal_manager.find(product_id).balance
+    @pocket_manager.find(product_id).balance
   end
 
   def find(id)
@@ -49,6 +49,11 @@ class PocketController
   end
 
   def delete(id)
+    balance = get_balance(id)
+    if balance > 0
+      withdraw(balance, id)
+    end
+    
     @pocket_manager.delete(id)
   end
 end

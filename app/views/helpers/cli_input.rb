@@ -19,7 +19,28 @@ module CliInput
     end
 
     def ask_valid_letter(param)
-        letter_condition = /\A([A-Za-z ]+)\Z/
+        letter_condition = /\A([A-Za-z ]+).{4,30}\Z/
+        ask_valid_param(param, letter_condition)
+    end
+
+    def ask_valid_withdraw(param, balance)
+        @prompt.ask("#{param}: ", required: true) do |q|
+            if (q <= 0) or (q > balance)
+                q.messages[:valid?] = 'Monto inválido para retirar'
+            end
+        end
+    end
+
+    def ask_valid_debit(param, balance)
+        @prompt.ask("#{param}: ", required: true) do |q|
+            if (q <= 0)
+                q.messages[:valid?] = 'Monto inválido para cargar'
+            end
+        end
+    end
+
+    def ask_valid_string(param)
+        letter_condition = /\A([A-Za-z0-9_ ]+).{4,15}\Z/
         ask_valid_param(param, letter_condition)
     end
     

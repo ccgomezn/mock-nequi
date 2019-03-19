@@ -8,22 +8,22 @@ class MattressController
     @mattress_manager = MattressManager.new()
   end
 
-  def debit(amount, product_id, location)
+  def debit(amount, location = "virtual-virtual")
     @individual_transaction.transaction_on_account(
       amount,
       $session[:account_id],
       'mattress',
-      product_id,
+      $session[:account_id],
       location
     )
   end
 
-  def withdraw(amount, product_id, location)
+  def withdraw(amount, location = "virtual-virtual")
     @individual_transaction.transaction_on_account(
       - amount,
       $session[:account_id],
       'mattress',
-      product_id,
+      $session[:account_id],
       location
     )
   end
