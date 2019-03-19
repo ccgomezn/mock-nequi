@@ -47,14 +47,12 @@ class GoalManager
     private
 
     def valid_data?(params)
-        name_valid = params.has_key?(:name) ?
-                     name_validation(params[:name]) : true
+        
         goal_valid = params.has_key?(:goal) ? 
                      numeric_validation(params[:goal]) : true
         balance_valid = params.has_key?(:balance) ? 
                         numeric_validation(params[:balance]) : true
-        state_valid = params.has_key?(:state) ?
-                      name_validation(params[:state]) : true
+        
         deadline_valid = params.has_key?(:deadline) ?
                          datetime_validation(params[:deadline]) : true
         creation_date_valid = params.has_key?(:creation_date) ?
@@ -63,8 +61,8 @@ class GoalManager
                            numeric_validation(params[:account_id]) : true
         
 
-        if (name_valid and goal_valid and \
-            balance_valid and state_valid and deadline_valid and \
+        if (goal_valid and \
+            balance_valid and deadline_valid and \
             creation_date_valid and account_id_valid)
             return true
         else
