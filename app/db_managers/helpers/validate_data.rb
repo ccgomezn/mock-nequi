@@ -20,7 +20,7 @@ module ValidateData
     end        
 
     def name_validation(name_str)
-        name_regex = /\A([\w\-\']{2,})([\s]+)([\w\-\']{2,})\z/
+        name_regex = /\A([A-Za-z ]+)\z/
         name_error = "ERROR: name format is not valid"
 
         validate_regex(name_regex, name_str, name_error)

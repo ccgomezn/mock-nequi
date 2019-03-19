@@ -4,7 +4,8 @@ require_relative 'logged_view'
 require_relative 'list_pocket_view'
 require 'tty-prompt'
 
-class PrinpalPocketView
+class PrincipalPocketView
+    include CliInput
     include CliMenuBuilder
 
     def initialize(pocket_controller)
@@ -24,9 +25,17 @@ class PrinpalPocketView
         menu = basic_menu(title)
         
         menu.add('Crear bolsillo') do
-            p selected
-
-            ListPocketView.new(@pocket_controller)  
+            pocket_data = ask_params("Name")
+            
+            if @pocket_controller.create(pocket_data["Name"])
+                @prompt.ok("Creacion exitosa")
+                sleep(1)
+            else
+                @prompt.error("Creacion fallida")
+                sleep(1)
+            end
+            
+            principal_pocket_menu()
         end
         menu.add('Mis bolsillos') do
             ListPocketView.new(@pocket_controller)        

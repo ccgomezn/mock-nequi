@@ -10,12 +10,12 @@ db_handler = DbHandler.instance
 $db_connection = db_handler.db
 $db_connection.freeze
 
-pc = PocketController.new()
-pc.find_all()
+#pc = PocketController.new()
+#pc.find_all()
 
 #ac.debit(100, 1, "virtual-virtual")
 
-#menu = PrincipalView.new()
+menu = PrincipalView.new()
 #menu = SignUpView.new()
 #menu.show()
 

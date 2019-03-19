@@ -22,6 +22,18 @@ class TransactionManager
         find_execution('transactions', id)
         return Transaction.new()
     end
+
+    def get_all_transactions(account_id)
+        transactions = find_all("transactions")
+        individual_transactions = find_all_by_column_execution("individual_transactions", "account_id", account_id)
+        mutual_transactions_out = find_all_by_column_execution("mutual_transactions", "origin_account_id", account_id)
+        mutual_transactions_in = find_all_by_column_execution("mutual_transactions", "final_account_id", account_id)
+        data = { individual_transactions: individual_transactions,
+                 mutual_transactions_in: mutual_transactions_in,
+                 mutual_transactions_out: mutual_transactions_out,
+                 transactions: transactions }
+        data
+    end
     
     #UPDATE And DELETE builders need a dict with the columns and values, if empty value = nil
     def update(id, params)

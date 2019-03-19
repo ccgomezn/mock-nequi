@@ -45,7 +45,7 @@ class LoggedView
         end
         menu.add('Bolsillos') do |selected|
             pocket_controller = PocketController.new()
-            PrinpalPocketView.new(pocket_controller)
+            PrincipalPocketView.new(pocket_controller)
         end
         menu.add('Regresar') do |selected|
             PrincipalView.new()
