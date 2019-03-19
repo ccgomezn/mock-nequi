@@ -32,12 +32,13 @@ class GoalController
   end
 
   def find_all
-    @goal_manager.find_all($session[:account_id]).balance
+    @goal_manager.find_all($session[:account_id])
   end
   
 
-  def insert(name, goal, balance, state, deadline, creation_date)
-    goal_map = {:name => name, :goal => goal, :state => state, :deadline => deadline, :creation_date => creation_date, :account_id => $session[:account_id]}
+  def insert(name, goal, deadline)
+    date = DateTime.now
+    goal_map = {:balance => 0,:name => name, :goal => goal.to_i, :state => 'No cumplida', :deadline => deadline, :creation_date => date.strftime('%Y-%m-%d %H:%M:%S'), :account_id => $session[:account_id]}
     @goal_manager.insert(goal_map)
   end
 
