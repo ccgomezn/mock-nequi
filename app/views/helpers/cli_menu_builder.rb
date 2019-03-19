@@ -7,8 +7,6 @@ module CliMenuBuilder
             description: description.center(description.length + 2),
             width: 70,
             fg: '#9F01FF',
-            bg: '#21054C') do |selected|
-                menu.quit
-            end
+            bg: '#21054C')
     end
 end

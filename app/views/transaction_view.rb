@@ -68,7 +68,7 @@ class TransactionView
                         break
                     end
                 end
-                @prompt.say('Cuenta de origin: ' + transaction[2].to_s, color: :bright_magenta)
+                @prompt.say('Cuenta de origen: ' + transaction[2].to_s, color: :bright_magenta)
                 @prompt.say('Valor: ' + amount.to_s, color: :bright_magenta)
                 @prompt.say('Fecha:  ' + date.to_s, color: :bright_magenta)
                 @prompt.say('')

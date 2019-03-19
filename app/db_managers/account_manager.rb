@@ -25,6 +25,10 @@ class AccountManager
                         total_balance: data_query[2], creation_date: data_query[3]}
         Account.new(data_account)
     end
+
+    def find_id_by_column_join(column, data)
+        find_id_column_join_execution("user", "account", column, data)
+    end
     
     #UPDATE And DELETE builders need a dict with the columns and values, if empty value = nil
     def update(id, params)

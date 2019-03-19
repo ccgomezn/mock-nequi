@@ -12,6 +12,12 @@ module SqlQueryBuilder
         find_query = "SELECT * FROM #{table_name} WHERE #{table_name}.#{column} = ?"
     end
 
+    def find_id_by_column_join_query(table1, table2, column)
+        find_query = "SELECT #{table2}s.id FROM #{table1}s INNER JOIN #{table2}s"\
+                     " ON #{table1}s.#{table2}_id = #{table2}s.id WHERE"\
+                     " #{table1}s.#{column} = ?"
+    end
+
     def insert_query(table_name, columns)
         column_string = ""
         values_string = ""

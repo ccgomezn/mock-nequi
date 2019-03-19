@@ -9,7 +9,8 @@ class ListPocketView
     include CliInput
     include CliMenuBuilder
 
-    def initialize(pocket_controller)
+    def initialize(account_controller, pocket_controller)
+        @account_controller = account_controller
         @pocket_controller = pocket_controller
 
         list_pocket_menu()
@@ -32,11 +33,13 @@ class ListPocketView
             space = " "
 
             menu.add(name + space*15 + "Saldo actual: #{balance}") do
-                PocketTransactionView.new(@pocket_controller, pocket)
+                PocketTransactionView.new(@account_controller,
+                                          @pocket_controller, 
+                                          pocket)
             end
         end
         menu.add('Regresar') do
-            PrincipalPocketView.new(@pocket_controller)
+            PrincipalPocketView.new(@account_controller, @pocket_controller)
         end
 
         menu.show

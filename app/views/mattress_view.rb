@@ -7,7 +7,8 @@ class MattressView
     include CliInput
     include CliMenuBuilder
 
-    def initialize(mattress_controller)
+    def initialize(account_controller, mattress_controller)
+        @account_controller = account_controller
         @mattress_controller = mattress_controller
         @prompt = TTY::Prompt.new(help_color: :cyan, active_color: :bright_magenta)
 
@@ -30,18 +31,22 @@ class MattressView
             mattress_menu()
         end
         menu.add('Cargar colchon') do |selected|
-            transaction_param = ask_params("Valor")
-            amount = transaction_param["Valor"].to_f
-            @mattress_controller.debit(amount, "virtual-virtual")
+            acc_balance = @account_controller.get_balance()
+            available_acc_balance = acc_balance[:available]
+            transaction_param = ask_valid_transaction("Valor",
+                                                      available_acc_balance)
+            amount = transaction_param.to_f
+            @mattress_controller.debit(amount)
             @prompt.ok("Carga Exitosa!")
             
             sleep(1)
             mattress_menu()
         end
         menu.add('Descargar colchon') do |selected|
-            transaction_param = ask_params("Valor")
-            amount = transaction_param["Valor"].to_f
-            @mattress_controller.withdraw(amount, "virtual-virtual")
+            mat_balance = @mattress_controller.get_balance()
+            transaction_param = ask_valid_transaction("Valor", mat_balance)
+            amount = transaction_param.to_f
+            @mattress_controller.withdraw(amount)
             @prompt.ok("Descarga Exitosa!")
             
             sleep(1)

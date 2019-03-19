@@ -26,9 +26,9 @@ class LoggedView
         title = title.center(title.length + 40)
         
         menu = basic_menu(title)
-
+        
+        account_controller = AccountController.new()
         menu.add('Cuenta de ahorros') do |selected|
-            account_controller = AccountController.new()
             AccountView.new(account_controller)
         end
         menu.add('Mis transacciones') do |selected|
@@ -37,15 +37,15 @@ class LoggedView
         end
         menu.add('Metas') do |selected|
             goal_controller = GoalController.new()
-            GoalView.new(goal_controller)
+            GoalView.new(account_controller, goal_controller)
         end
         menu.add('Colchon') do |selected|
             mattress_controller = MattressController.new()
-            MattressView.new(mattress_controller)
+            MattressView.new(account_controller, mattress_controller)
         end
         menu.add('Bolsillos') do |selected|
             pocket_controller = PocketController.new()
-            PrincipalPocketView.new(pocket_controller)
+            PrincipalPocketView.new(account_controller, pocket_controller)
         end
         menu.add('Regresar') do |selected|
             PrincipalView.new()

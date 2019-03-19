@@ -23,19 +23,36 @@ module CliInput
         ask_valid_param(param, letter_condition)
     end
 
-    def ask_valid_withdraw(param, balance)
-        @prompt.ask("#{param}: ", required: true) do |q|
-            if (q <= 0) or (q > balance)
-                q.messages[:valid?] = 'Monto inválido para retirar'
-            end
+    def ask_valid_transaction(param, available_balance)
+        transaction = @prompt.ask("#{param}: ", required: true) 
+        if transaction.to_f <= 0
+            @prompt.error("Monto inválido para la transacción")
+            ask_valid_transaction(param, available_balance)
+        elsif transaction.to_f > available_balance
+            @prompt.error("Fondos insuficientes para la transacción")
+            ask_valid_transaction(param, available_balance)
+        else
+            return transaction
         end
     end
 
-    def ask_valid_debit(param, balance)
-        @prompt.ask("#{param}: ", required: true) do |q|
-            if (q <= 0)
-                q.messages[:valid?] = 'Monto inválido para cargar'
-            end
+    def ask_valid_debit(param)
+        debit = @prompt.ask("#{param}: ", required: true) 
+        if debit.to_f <= 0
+            @prompt.error("Monto inválido para cargar")
+            ask_valid_debit(param)
+        else
+            return debit
+        end
+    end
+
+    def ask_transaction_email(param, actual_email)
+        email = ask_valid_email(param)
+        if email == actual_email
+            @prompt.error("Email no puede ser igual al de tu cuenta!")
+            ask_transaction_email(param, actual_email)
+        else
+            return email
         end
     end
 

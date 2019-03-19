@@ -23,7 +23,7 @@ class PrincipalView
         
         menu.add('Crear usuario') do 
             email = ask_valid_email("Email")
-            name = ask_valid_letter("Name")
+            name = ask_valid_letter("Nombre")
 
             if @user_controller.create(name, email, mask_valid_password())
                 @prompt.ok("Creacion de usuario exitosa!")

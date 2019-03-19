@@ -8,7 +8,8 @@ class PrincipalPocketView
     include CliInput
     include CliMenuBuilder
 
-    def initialize(pocket_controller)
+    def initialize(account_controller, pocket_controller)
+        @account_controller = account_controller
         @pocket_controller = pocket_controller
         @prompt = TTY::Prompt.new(help_color: :cyan, active_color: :bright_magenta)
 
@@ -38,7 +39,7 @@ class PrincipalPocketView
             principal_pocket_menu()
         end
         menu.add('Mis bolsillos') do
-            ListPocketView.new(@pocket_controller)        
+            ListPocketView.new(@account_controller, @pocket_controller)        
         end
         menu.add('Regresar') do
             LoggedView.new()
