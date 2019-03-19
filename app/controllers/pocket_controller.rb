@@ -29,8 +29,9 @@ class PocketController
   end
 
 
-  def insert(name, balance, creation_date)
-    pocket_map = {:name => name, :balance => balance, :creation_date => creation_date, :account_id => $session[:account_id]}
+  def insert(name)
+    date = DateTime.now
+    pocket_map = {:name => name, :balance => 0, :creation_date => date.strftime('%Y-%m-%d %H:%M:%S'), :account_id => $session[:account_id]}
     @pocket_manager.insert(pocket_map)
   end
 
@@ -43,7 +44,7 @@ class PocketController
   end
 
   def find_all
-    @pocket_manager.find_all($session[:account_id]).balance
+    @pocket_manager.find_all($session[:account_id])
   end
 
   def delete(id)
