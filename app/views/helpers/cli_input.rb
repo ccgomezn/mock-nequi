@@ -23,6 +23,11 @@ module CliInput
         ask_valid_param(param, letter_condition)
     end
 
+    def ask_valid_date(param)
+        date_regex = /\A(\d{4}-([0]\d|[1][0-2])-([0-2]\d|[3][0-1]))\Z/
+        ask_valid_param(param, date_regex)
+    end
+
     def ask_valid_transaction(param, available_balance)
         transaction = @prompt.ask("#{param}: ", required: true) 
         if transaction.to_f <= 0
@@ -36,11 +41,11 @@ module CliInput
         end
     end
 
-    def ask_valid_debit(param)
-        debit = @prompt.ask("#{param}: ", required: true) 
+    def ask_valid_money(param)
+        debit = @prompt.ask("#{param}: ", required: true, convert: :float) 
         if debit.to_f <= 0
-            @prompt.error("Monto inválido para cargar")
-            ask_valid_debit(param)
+            @prompt.error("Monto inválido para asignar")
+            ask_valid_money(param)
         else
             return debit
         end

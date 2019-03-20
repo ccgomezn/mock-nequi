@@ -41,7 +41,7 @@ class GoalManager
     end
 
     def delete(id)
-        delete_execution("accounts", id)
+        delete_execution("goals", id)
     end
 
     private

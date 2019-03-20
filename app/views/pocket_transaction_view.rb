@@ -74,7 +74,7 @@ class PocketTransactionView
             end
 
             sleep(1)
-            pocket_transaction_menu()
+            ListPocketView.new(@account_controller, @pocket_controller)
         end
         menu.add('Regresar') do
             ListPocketView.new(@account_controller, @pocket_controller)

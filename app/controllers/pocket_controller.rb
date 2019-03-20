@@ -71,4 +71,5 @@ class PocketController
     
     @pocket_manager.delete(id)
   end
+  
 end
