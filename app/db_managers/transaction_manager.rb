@@ -9,12 +9,15 @@ class TransactionManager
     def insert(params)
                 
         if valid_data?(params)
-            insert_execution('transactions', params)
-            transaction_id = get_last_register_execution('transactions')
-            params[:id] = transaction_id[0]
-            Transaction.new(params)
+            if(insert_execution('transactions', params))
+                transaction_id = get_last_register_execution('transactions')
+                params[:id] = transaction_id[0]
+                Transaction.new(params)
+            else
+                false
+            end
         else
-            print("ERROR: couldn't insert account data")
+            false
         end
     end
 

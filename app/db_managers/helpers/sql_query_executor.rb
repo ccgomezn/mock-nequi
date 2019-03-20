@@ -81,8 +81,7 @@ module SqlQueryExecutor
                 data.push(row)
             end
         rescue SQLite3::Exception => sql_error
-            puts(query_error)
-            puts(sql_error)
+            return false
         ensure
             stmt_close(query_stmt)
             return data

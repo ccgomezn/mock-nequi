@@ -60,9 +60,11 @@ class AccountView
             email_param = ask_transaction_email("Email del usuario",
                                                 origin_account_email)
             amount = amount_param.to_f
-            @account_controller.consign_to_another_account(amount, email_param)
-            @prompt.ok("Transacción Exitosa!")
-            
+            if(@account_controller.consign_to_another_account(amount, email_param))
+                @prompt.ok("Transacción Exitosa!")
+            else
+                @prompt.error("Usuario Inexistente!")
+            end
             sleep(1)
             account_menu()
         end

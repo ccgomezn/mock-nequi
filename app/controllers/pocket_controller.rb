@@ -14,7 +14,9 @@ class PocketController
 
   def consign_to_another_account(amount, pocket_id, final_account_email)
     final_account_id = @account_controller.find_by_email(final_account_email)
-    
+    if final_account_id.nil? || final_account_id.length.zero?
+      return false
+    end    
     @mutual_transaction.consign_to_another_account(
       amount,
       pocket_id,

@@ -56,9 +56,13 @@ class PocketTransactionView
             email_param = ask_transaction_email("Email del usuario",
                                                 origin_account_email)
             amount = amount_param.to_f
-            @pocket_controller.consign_to_another_account(amount, pocket_id,
+            if @pocket_controller.consign_to_another_account(amount, pocket_id,
                                                           email_param)
-            @prompt.ok("Transacción Exitosa!")
+
+                @prompt.ok("Transacción Exitosa!")
+            else
+                @prompt.error("Usuario Inexistente!")
+            end
             
             sleep(1)
             pocket_transaction_menu()
@@ -74,7 +78,7 @@ class PocketTransactionView
             end
 
             sleep(1)
-            pocket_transaction_menu()
+            ListPocketView.new(@account_controller, @pocket_controller)
         end
         menu.add('Regresar') do
             ListPocketView.new(@account_controller, @pocket_controller)

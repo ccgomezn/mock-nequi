@@ -5,7 +5,6 @@ module ValidateData
 
     def validate_regex(regex, data_value, error)
         if regex.match(data_value) == nil
-            print(error)
             return false
         else 
             return true
@@ -38,7 +37,6 @@ module ValidateData
             DateTime.strptime(datetime_str, '%Y-%m-%d %H:%M:%S')
             return true
         rescue
-            puts "ERROR: datetime format is not valid"
             return false
         end
     end
@@ -47,7 +45,6 @@ module ValidateData
         if numeric_value.is_a? Numeric
             return true
         else
-            print("ERROR: currency is not a valid number")
             return false
         end
     end

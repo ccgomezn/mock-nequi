@@ -9,12 +9,15 @@ class MattressManager
     def insert(params)
                 
         if valid_data?(params)
-            insert_execution('mattresses', params)
-            matress_id = get_last_register_execution('mattresses')
-            params[:id] = matress_id[0]
-            Mattress.new(params)
+            if(insert_execution('mattresses', params))
+                matress_id = get_last_register_execution('mattresses')
+                params[:id] = matress_id[0]
+                Mattress.new(params)
+            else
+                false
+            end
         else
-            print("ERROR: couldn't insert account data")
+            false
         end
     end
 

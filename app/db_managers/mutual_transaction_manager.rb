@@ -10,12 +10,15 @@ class MutualTransactionManager
                 
         if valid_data?(params)
              
-            insert_execution("mutual_transactions", params)
-            mutual_transaction_id = get_last_register_execution('mutual_transactions')
-            params[:id] = mutual_transaction_id
-            MutualTransaction.new(params)
+            if(insert_execution("mutual_transactions", params))
+                mutual_transaction_id = get_last_register_execution('mutual_transactions')
+                params[:id] = mutual_transaction_id
+                MutualTransaction.new(params)
+            else
+                false
+            end
         else
-            print("ERROR: couldn't insert account data")
+            false
         end
     end
 

@@ -9,12 +9,15 @@ class UserManager
     def insert(params)
                 
         if valid_data?(params)
-            insert_execution("users", params)
-            user_id = get_last_register_execution('users')
-            params[:id] = user_id[0]
-            User.new(params)
+            if(insert_execution("users", params))
+                user_id = get_last_register_execution('users')
+                params[:id] = user_id[0]
+                User.new(params)
+            else
+                false
+            end
         else
-            puts("ERROR: couldn't insert account data")
+            false
         end
     end
 

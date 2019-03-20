@@ -10,12 +10,15 @@ class IndividualTransactionManager
                 
         if valid_data?(params)
             
-            insert_execution("individual_transactions", params)
-            individual_transaction = get_last_register_execution('individual_transactions')
-            params[:id] = individual_transaction[0]
-            IndividualTransaction.new(params)
+            if(insert_execution("individual_transactions", params))
+                individual_transaction = get_last_register_execution('individual_transactions')
+                params[:id] = individual_transaction[0]
+                IndividualTransaction.new(params)
+            else
+                false
+            end
         else
-            print("ERROR: couldn't insert account data")
+            false
         end
     end
 
