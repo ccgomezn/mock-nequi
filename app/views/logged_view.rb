@@ -39,6 +39,7 @@ class LoggedView
     menu.add('Metas') do |_selected|
       goal_controller = GoalController.new
       PrincipalGoalView.new(account_controller, goal_controller)
+
     end
     menu.add('Colchon') do |_selected|
       mattress_controller = MattressController.new
@@ -49,6 +50,7 @@ class LoggedView
       PrincipalPocketView.new(account_controller, pocket_controller)
     end
     menu.add('Cerrar sesion') do |_selected|
+
       PrincipalView.new
     end
 

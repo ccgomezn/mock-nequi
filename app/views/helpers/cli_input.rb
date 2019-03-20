@@ -22,6 +22,7 @@ module CliInput
     ask_valid_param(param, letter_condition)
   end
 
+
   def ask_valid_date(param)
     date_regex = /\A(\d{4}-([0]\d|[1][0-2])-([0-2]\d|[3][0-1]))\Z/
     ask_valid_param(param, date_regex)
@@ -71,6 +72,7 @@ module CliInput
       p.validate(len_condition, 'Clave demasiado corta!')
     end
   end
+
 
   def ask_params(*params)
     filled_params = {}
