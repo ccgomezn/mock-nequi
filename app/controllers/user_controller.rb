@@ -4,9 +4,9 @@ require_relative './account_controller'
 require 'digest'
 
 class UserController
-  def initialize()
-    @account_controller = AccountController.new()
-    @user_manager = UserManager.new()
+  def initialize
+    @account_controller = AccountController.new
+    @user_manager = UserManager.new
   end
 
   def find(id)
@@ -14,8 +14,8 @@ class UserController
   end
 
   def update(id, name, email, password_digest, account_id)
-    userManager = UserManager.new()
-    user_map = {:name => name, :email => email, :password_digest => password_digest, :account_id => account_id}
+    userManager = UserManager.new
+    user_map = { name: name, email: email, password_digest: password_digest, account_id: account_id }
     userManager.update(id, user_map)
   end
 
@@ -24,7 +24,7 @@ class UserController
     user_data = { name: name, email: email,
                   password_digest: Digest::SHA256.hexdigest(password),
                   account_id: account.id }
-    if(@user_manager.insert(user_data))
+    if @user_manager.insert(user_data)
       true
     else
       false
@@ -33,7 +33,7 @@ class UserController
 
   def login(email, password)
     user = @user_manager.login(email, Digest::SHA256.hexdigest(password))
-    if (user[:state])
+    if user[:state]
       $session[:email] = email
       $session[:account_id] = user[:account_id]
       true
