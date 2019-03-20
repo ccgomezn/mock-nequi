@@ -98,6 +98,7 @@ class DbHandler
             CREATE TABLE IF NOT EXISTS mutual_transactions(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 transaction_id INT NOT NULL,
+                origin_account_id INT NOT NULL,
                 origin_id INT NOT NULL,
                 origin_product_type VARCHAR(20) NOT NULL,
                 final_account_id INT NOT NULL,

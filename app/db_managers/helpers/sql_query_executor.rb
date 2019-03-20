@@ -35,6 +35,12 @@ module SqlQueryExecutor
         execute_query(find_join_query, data, find_error)
     end
 
+    def find_all_column_join_execution(table1, table2, column, data)
+        find_join_query = find_all_by_column_join_query(table1, table2, column)
+        
+        execute_query(find_join_query, data, find_error)
+    end
+
     def insert_execution(table_name, data)
         columns = data.keys
         values = data.values

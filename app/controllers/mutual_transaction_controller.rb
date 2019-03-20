@@ -42,7 +42,8 @@ class MutualTransactionController
     data_mutual_transaction = { transaction_id: transaction_id,
                                 origin_id: origin_id,
                                 origin_product_type: origin_product_type,
-                                final_account_id: final_account_id }
+                                final_account_id: final_account_id,
+                                origin_account_id: $session[:account_id] }
     @mutual_transaction_manager.insert(data_mutual_transaction)
   end
 
