@@ -32,7 +32,7 @@ class AccountView
             account_menu()
         end
         menu.add('Cargar cuenta') do
-            transaction_param = ask_valid_debit("Valor")
+            transaction_param = ask_valid_money("Valor")
             amount = transaction_param.to_f
             @account_controller.debit(amount)
             @prompt.ok("Carga Exitosa!")
