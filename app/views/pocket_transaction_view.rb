@@ -48,6 +48,21 @@ class PocketTransactionView
             sleep(1)
             pocket_transaction_menu()
         end
+        menu.add('Consignar a otro usuario') do 
+            balance = @pocket_controller.get_balance(pocket_id)
+            amount_param = ask_valid_transaction("Valor", balance)
+            
+            origin_account_email = $session[:email]
+            email_param = ask_transaction_email("Email del usuario",
+                                                origin_account_email)
+            amount = amount_param.to_f
+            @pocket_controller.consign_to_another_account(amount, pocket_id,
+                                                          email_param)
+            @prompt.ok("Transacción Exitosa!")
+            
+            sleep(1)
+            pocket_transaction_menu()
+        end
         menu.add('Eliminar bolsillo') do
             delete_choices = %w(Si No)
             choice = @prompt.select("Estas seguro de eliminar #{pocket_name}?",
@@ -55,7 +70,7 @@ class PocketTransactionView
             
             if choice == "Si"
                 @pocket_controller.delete(pocket_id)
-                @prompt.ok("Tu bolsillo #{pocket_name} ha sido eliminado")
+                @prompt.ok("Tu bolsillo '#{pocket_name}' ha sido eliminado")
             end
 
             sleep(1)

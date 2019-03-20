@@ -1,11 +1,26 @@
 require_relative './individual_transaction_controller'
 require_relative '../db_managers/pocket_manager'
+require_relative 'mutual_transaction_controller'
+require_relative 'account_controller'
 
 class PocketController
 
   def initialize()
     @individual_transaction = IndividualTransactionController.new()
     @pocket_manager = PocketManager.new()
+    @account_controller = AccountController.new()
+    @mutual_transaction = MutualTransactionController.new()
+  end
+
+  def consign_to_another_account(amount, pocket_id, final_account_email)
+    final_account_id = @account_controller.find_by_email(final_account_email)
+    
+    @mutual_transaction.consign_to_another_account(
+      amount,
+      pocket_id,
+      'pocket',
+      final_account_id
+    )
   end
 
   def debit(amount, product_id, location = "virtual-virtual")

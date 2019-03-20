@@ -51,13 +51,13 @@ class AccountView
             sleep(1)
             account_menu()
         end
-        menu.add('Consignar a otra cuenta') do 
+        menu.add('Consignar a otro usuario') do 
             balance = @account_controller.get_balance()
             available_balance = balance[:available]
             amount_param = ask_valid_transaction("Valor", available_balance)
             
             origin_account_email = $session[:email]
-            email_param = ask_transaction_email("Email de la cuenta",
+            email_param = ask_transaction_email("Email del usuario",
                                                 origin_account_email)
             amount = amount_param.to_f
             @account_controller.consign_to_another_account(amount, email_param)

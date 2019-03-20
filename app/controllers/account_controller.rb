@@ -18,6 +18,7 @@ class AccountController
     @mutual_transaction.consign_to_another_account(
       amount,
       $session[:account_id],
+      'account',
       final_account_id
     )
   end
