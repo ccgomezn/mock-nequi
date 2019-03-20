@@ -2,31 +2,31 @@ require 'sqlite3'
 require 'singleton'
 
 class DbHandler
-    include Singleton
+  include Singleton
 
-    attr_reader :db
+  attr_reader :db
 
-    def initialize()
-        db_folder_path = "../../db/"
-        db_name = "mock_nequi_db.db"
-        @db = connect(db_folder_path, db_name)
+  def initialize
+    db_folder_path = './db/'
+    db_name = 'mock_nequi_db.db'
+    @db = connect(db_folder_path, db_name)
 
-        create()
-        ObjectSpace.define_finalizer(self, proc { close_connection(@db) })
-    end
-    
-    # Creation of all db tables and its relations using foreign keys
-    def create
-        @db.execute <<-SQL 
+    create
+    ObjectSpace.define_finalizer(self, proc { close_connection(@db) })
+  end
+
+  # Creation of all db tables and its relations using foreign keys
+  def create
+    @db.execute <<-SQL
             CREATE TABLE IF NOT EXISTS accounts(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 available_balance DECIMAL(10, 0) NOT NULL,
                 total_balance DECIMAL(10, 0) NOT NULL,
                 creation_date DATETIME NOT NULL
             );
-        SQL
+    SQL
 
-        @db.execute <<-SQL 
+    @db.execute <<-SQL
             CREATE TABLE IF NOT EXISTS users(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name VARCHAR(45) NOT NULL,
@@ -36,17 +36,17 @@ class DbHandler
                 UNIQUE(email)
                 FOREIGN KEY(account_id) REFERENCES accounts(id)
             );
-        SQL
+    SQL
 
-        @db.execute <<-SQL 
+    @db.execute <<-SQL
             CREATE TABLE IF NOT EXISTS transactions(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 date DATETIME NOT NULL,
                 amount DECIMAL(10, 0) NOT NULL
             );
-        SQL
+    SQL
 
-        @db.execute <<-SQL 
+    @db.execute <<-SQL
             CREATE TABLE IF NOT EXISTS goals(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name VARCHAR(45) NOT NULL,
@@ -58,9 +58,9 @@ class DbHandler
                 account_id INT NOT NULL,
                 FOREIGN KEY(account_id) REFERENCES accounts(id)
             );
-        SQL
+    SQL
 
-        @db.execute <<-SQL 
+    @db.execute <<-SQL
             CREATE TABLE IF NOT EXISTS pockets(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name VARCHAR(45) NOT NULL,
@@ -69,19 +69,18 @@ class DbHandler
                 account_id INT NOT NULL,
                 FOREIGN KEY(account_id) REFERENCES accounts(id)
             );
-        SQL
+    SQL
 
-        @db.execute <<-SQL 
+    @db.execute <<-SQL
             CREATE TABLE IF NOT EXISTS mattresses(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 balance DECIMAL(10,0) NOT NULL,
                 account_id INT NOT NULL,
                 FOREIGN KEY(account_id) REFERENCES accounts(id)
             );
-        SQL
+    SQL
 
-        
-        @db.execute <<-SQL 
+    @db.execute <<-SQL
             CREATE TABLE IF NOT EXISTS individual_transactions(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 product VARCHAR(45) NULL,
@@ -92,9 +91,9 @@ class DbHandler
                 FOREIGN KEY(transaction_id) REFERENCES transactions(id)
                 FOREIGN KEY(account_id) REFERENCES accounts(id)
             );
-        SQL
+    SQL
 
-        @db.execute <<-SQL 
+    @db.execute <<-SQL
             CREATE TABLE IF NOT EXISTS mutual_transactions(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 transaction_id INT NOT NULL,
@@ -105,19 +104,19 @@ class DbHandler
                 FOREIGN KEY(transaction_id) REFERENCES transactions(id)
                 FOREIGN KEY(final_account_id) REFERENCES accounts(id)
             );
-        SQL
-    end
+    SQL
+  end
 
-    #method to connect to the db
-    def connect(db_folder_path, db_name)
-        db = SQLite3::Database.open(db_folder_path + db_name)
-        return db
-    end
+  # method to connect to the db
+  def connect(db_folder_path, db_name)
+    db = SQLite3::Database.open(db_folder_path + db_name)
+    db
+  end
 
-    def close_connection(db)
-        if db
-            db.close
-            puts "db connection closed!"
-        end
+  def close_connection(db)
+    if db
+      db.close
+      puts 'db connection closed!'
     end
+  end
 end

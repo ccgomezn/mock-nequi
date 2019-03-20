@@ -2,12 +2,12 @@ require_relative './individual_transaction_controller'
 require_relative '../db_managers/goal_manager'
 
 class GoalController
-  def initialize()
-    @individual_transaction = IndividualTransactionController.new()
-    @goal_manager = GoalManager.new()
+  def initialize
+    @individual_transaction = IndividualTransactionController.new
+    @goal_manager = GoalManager.new
   end
 
-  def debit(amount, product_id, location = "virtual-virtual")
+  def debit(amount, product_id, location = 'virtual-virtual')
     @individual_transaction.transaction_on_account(
       amount,
       $session[:account_id],
@@ -17,7 +17,7 @@ class GoalController
     )
   end
 
-  def withdraw(amount, product_id, location = "virtual-virtual")
+  def withdraw(amount, product_id, location = 'virtual-virtual')
     @individual_transaction.transaction_on_account(
       - amount,
       $session[:account_id],
@@ -31,9 +31,9 @@ class GoalController
     p product_id
     p goal_amount
     if get_balance(product_id) >= goal_amount
-      goal_map = {:state => "Cumplida"}
+      goal_map = { state: 'Cumplida' }
       @goal_manager.update(product_id, goal_map)
-    end   
+    end
   end
 
   def get_balance(product_id)
@@ -43,14 +43,13 @@ class GoalController
   def find_all
     @goal_manager.find_all($session[:account_id])
   end
-  
 
   def create(name, goal, deadline)
     date = DateTime.now
-    goal_map = {:balance => 0,:name => name, :goal => goal.to_f,
-                :state => 'No cumplida', :deadline => deadline, 
-                :creation_date => date.strftime('%Y-%m-%d %H:%M:%S'), 
-                :account_id => $session[:account_id]}
+    goal_map = { balance: 0, name: name, goal: goal.to_f,
+                 state: 'No cumplida', deadline: deadline,
+                 creation_date: date.strftime('%Y-%m-%d %H:%M:%S'),
+                 account_id: $session[:account_id] }
     @goal_manager.insert(goal_map)
   end
 
@@ -60,11 +59,8 @@ class GoalController
 
   def delete(id)
     balance = get_balance(id)
-    if balance > 0
-      withdraw(balance, id)
-    end
-    
+    withdraw(balance, id) if balance > 0
+
     @goal_manager.delete(id)
   end
-
 end
