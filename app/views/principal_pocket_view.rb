@@ -4,10 +4,12 @@ require_relative 'logged_view'
 require_relative 'list_pocket_view'
 require 'tty-prompt'
 
-class PrinpalPocketView
+class PrincipalPocketView
+    include CliInput
     include CliMenuBuilder
 
-    def initialize(pocket_controller)
+    def initialize(account_controller, pocket_controller)
+        @account_controller = account_controller
         @pocket_controller = pocket_controller
         @prompt = TTY::Prompt.new(help_color: :cyan, active_color: :bright_magenta)
 
@@ -24,12 +26,20 @@ class PrinpalPocketView
         menu = basic_menu(title)
         
         menu.add('Crear bolsillo') do
-            p selected
-
-            ListPocketView.new(@pocket_controller)  
+            name = ask_valid_string("Name")
+            
+            if @pocket_controller.create(name)
+                @prompt.ok("Creacion exitosa")
+                sleep(1)
+            else
+                @prompt.error("Creacion fallida")
+                sleep(1)
+            end
+            
+            principal_pocket_menu()
         end
         menu.add('Mis bolsillos') do
-            ListPocketView.new(@pocket_controller)        
+            ListPocketView.new(@account_controller, @pocket_controller)        
         end
         menu.add('Regresar') do
             LoggedView.new()

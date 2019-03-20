@@ -1,14 +1,29 @@
 require_relative './individual_transaction_controller'
 require_relative '../db_managers/pocket_manager'
+require_relative 'mutual_transaction_controller'
+require_relative 'account_controller'
 
 class PocketController
 
   def initialize()
     @individual_transaction = IndividualTransactionController.new()
     @pocket_manager = PocketManager.new()
+    @account_controller = AccountController.new()
+    @mutual_transaction = MutualTransactionController.new()
   end
 
-  def debit(amount, product_id, location)
+  def consign_to_another_account(amount, pocket_id, final_account_email)
+    final_account_id = @account_controller.find_by_email(final_account_email)
+    
+    @mutual_transaction.consign_to_another_account(
+      amount,
+      pocket_id,
+      'pocket',
+      final_account_id
+    )
+  end
+
+  def debit(amount, product_id, location = "virtual-virtual")
     @individual_transaction.transaction_on_account(
       amount,
       $session[:account_id],
@@ -18,7 +33,7 @@ class PocketController
     )
   end
 
-  def withdraw(amount, product_id, location)
+  def withdraw(amount, product_id, location = "virtual-virtual")
     @individual_transaction.transaction_on_account(
       - amount,
       $session[:account_id],
@@ -28,26 +43,32 @@ class PocketController
     )
   end
 
-
-  def insert(name)
-    date = DateTime.now
-    pocket_map = {:name => name, :balance => 0, :creation_date => date.strftime('%Y-%m-%d %H:%M:%S'), :account_id => $session[:account_id]}
+  def create(name)
+    creation_date = DateTime.now
+    pocket_map = {:name => name, :balance => 0, 
+                  :creation_date => creation_date.strftime('%Y-%m-%d %H:%M:%S'),
+                  :account_id => $session[:account_id]}
     @pocket_manager.insert(pocket_map)
   end
 
   def get_balance(product_id)
-    @goal_manager.find(product_id).balance
+    @pocket_manager.find(product_id).balance
   end
 
   def find(id)
     @pocket_manager.find(id)
   end
 
-  def find_all
+  def find_all()
     @pocket_manager.find_all($session[:account_id])
   end
 
   def delete(id)
+    balance = get_balance(id)
+    if balance > 0
+      withdraw(balance, id)
+    end
+    
     @pocket_manager.delete(id)
   end
 end

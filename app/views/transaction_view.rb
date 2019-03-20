@@ -8,14 +8,12 @@ class TransactionView
     def initialize(transaction_controller)
         @transaction_controller = transaction_controller
         @prompt = TTY::Prompt.new(help_color: :cyan, active_color: :bright_magenta)
-        transaction_menu()
+        transaction_view()
     end
     
-    def transaction_menu()
+    def transaction_view()
         # this is for filling the layout in the description
         # the library don't support inserting text 
-        title = "Transacciones"
-        title = title.center(title.length + 57)
         data = @transaction_controller.get_all_transactions()
         if !data[:individual_transactions].nil?
             data[:individual_transactions].each do |transaction|
@@ -67,11 +65,10 @@ class TransactionView
                     if(transaction[3] == real_transaction[0])
                         amount = real_transaction[2]
                         date = real_transaction[1]
-                                            break
-
+                        break
                     end
                 end
-                @prompt.say('Cuenta de origin: ' + transaction[2].to_s, color: :bright_magenta)
+                @prompt.say('Cuenta de origen: ' + transaction[2].to_s, color: :bright_magenta)
                 @prompt.say('Valor: ' + amount.to_s, color: :bright_magenta)
                 @prompt.say('Fecha:  ' + date.to_s, color: :bright_magenta)
                 @prompt.say('')
@@ -79,11 +76,7 @@ class TransactionView
             end
         end
         @prompt.keypress('Presione una tecla para continuar')
-        menu = basic_menu(title)
 
-        menu.add('Regresar') do |selected|
-            LoggedView.new()
-        end
-        menu.show
+        LoggedView.new()
     end
 end

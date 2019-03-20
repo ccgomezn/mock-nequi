@@ -7,19 +7,14 @@ class PocketManager
     include SqlQueryExecutor
 
     def insert(params)
-                
         if valid_data?(params)
             insert_execution('pockets', params)
             pocket_id = get_last_register_execution('pockets')
             params[:id] = pocket_id[0]
             Pocket.new(params)
-        else
-            print("ERROR: couldn't insert account data")
         end
     end
-  def find_all(account_id)
-        find_all_by_column_execution("pockets","account_id", account_id)
-    end
+  
     def find(id)
         data_query = find_execution('pockets', id)
         data_pocket = { id: data_query[0], name: data_query[1],
@@ -27,7 +22,11 @@ class PocketManager
                         account_id: data_query[4] }
         Pocket.new(data_pocket)
     end
-    
+
+    def find_all(account_id)
+        find_all_by_column_execution("pockets","account_id", account_id)
+    end
+
     #UPDATE And DELETE builders need a dict with the columns and values, if empty value = nil
     def update(id, params)
         if valid_data?(params)
@@ -44,10 +43,6 @@ class PocketManager
     private
 
     def valid_data?(params)
-        name_valid = params.has_key?(:name) ? 
-                     name_validation(params[:name]) : true
-        goal_valid = params.has_key?(:goal) ? 
-                     numeric_validation(params[:goal]) : true
         balance_valid = params.has_key?(:balance) ?
                         numeric_validation(params[:balance]) : true
         creation_date_valid = params.has_key?(:creation_date) ?
@@ -56,7 +51,7 @@ class PocketManager
                            numeric_validation(params[:account_id]) : true
         
 
-        if (name_valid and goal_valid and balance_valid and creation_date_valid and account_id_valid)
+        if (balance_valid and creation_date_valid and account_id_valid)
             return true
         else
             return false

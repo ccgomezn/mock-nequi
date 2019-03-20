@@ -7,7 +7,7 @@ class GoalController
     @goal_manager = GoalManager.new()
   end
 
-  def debit(amount, product_id, location)
+  def debit(amount, product_id, location = "virtual-virtual")
     @individual_transaction.transaction_on_account(
       amount,
       $session[:account_id],
@@ -17,7 +17,7 @@ class GoalController
     )
   end
 
-  def withdraw(amount, product_id, location)
+  def withdraw(amount, product_id, location = "virtual-virtual")
     @individual_transaction.transaction_on_account(
       - amount,
       $session[:account_id],

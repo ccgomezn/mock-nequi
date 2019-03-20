@@ -12,15 +12,18 @@ class AccountController
     @mattress_manager = MattressManager.new()
   end
 
-  def consign_to_another_account(amount, final_account_id)
+  def consign_to_another_account(amount, final_account_email)
+    final_account_id = find_by_email(final_account_email)
+    
     @mutual_transaction.consign_to_another_account(
       amount,
       $session[:account_id],
+      'account',
       final_account_id
     )
   end
 
-  def debit(amount, location)
+  def debit(amount, location = "virtual-virtual")
     @individual_transaction.transaction_on_account(
       amount,
       $session[:account_id],
@@ -30,7 +33,7 @@ class AccountController
     )
   end
 
-  def withdraw(amount, location)
+  def withdraw(amount, location = "virtual-virtual")
     @individual_transaction.transaction_on_account(
       - amount,
       $session[:account_id],
@@ -49,6 +52,10 @@ class AccountController
 
   def find(id)
     @account_manager.find(id)
+  end
+  
+  def find_by_email(email)
+    @account_manager.find_id_by_column_join("email", email)
   end
   
   def insert(avaiable_balance, total_balance)

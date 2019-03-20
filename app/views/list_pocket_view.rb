@@ -1,15 +1,16 @@
 require_relative 'helpers/cli_menu_builder'
 require_relative 'helpers/cli_input'
 require_relative 'logged_view'
-require_relative 'list_pocket_view'
 require_relative 'principal_pocket_view'
+require_relative 'pocket_transaction_view'
 require 'tty-prompt'
 
 class ListPocketView
     include CliInput
     include CliMenuBuilder
 
-    def initialize(pocket_controller)
+    def initialize(account_controller, pocket_controller)
+        @account_controller = account_controller
         @pocket_controller = pocket_controller
 
         list_pocket_menu()
@@ -25,16 +26,20 @@ class ListPocketView
         menu = basic_menu(title)
         
         pockets = @pocket_controller.find_all()
-
         pockets.each do |pocket|
-            name = pocket["name"]
+            name = pocket[1]
+            pocket_id = pocket[0]
+            balance = @pocket_controller.get_balance(pocket_id)
+            space = " "
 
-            menu.add(name) do
-                PocketTransactionView.new(@pocket_controller, pocket)
+            menu.add(name + space*15 + "Saldo actual: #{balance}") do
+                PocketTransactionView.new(@account_controller,
+                                          @pocket_controller, 
+                                          pocket)
             end
         end
         menu.add('Regresar') do
-            PrincipalPocketView.new(@pocket_controller)
+            PrincipalPocketView.new(@account_controller, @pocket_controller)
         end
 
         menu.show

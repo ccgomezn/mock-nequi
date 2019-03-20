@@ -22,23 +22,24 @@ class PrincipalView
         menu = basic_menu(title, description)
         
         menu.add('Crear usuario') do 
-            signup_data = ask_params("Name", "Email", "Password")
-            if(@user_controller.create(signup_data["Name"],
-                                     signup_data["Email"],
-                                     signup_data["Password"]))
-                @prompt.ok("Creacion exitosa")
+            email = ask_valid_email("Email")
+            name = ask_valid_letter("Nombre")
+
+            if @user_controller.create(name, email, mask_valid_password())
+                @prompt.ok("Creacion de usuario exitosa!")
                 sleep(1)
             else
-                @prompt.error("Creacion fallida")
+                @prompt.error("Creacion de usuario fallida :c")
                 sleep(1)
             end
+            
             PrincipalView.new()
         end
         menu.add('Entrar') do |selected|
-            login_data = ask_params("Email", "Password")
-            if(@user_controller.login(login_data["Email"],
-                                      login_data["Password"]))
-                @prompt.ok("Ingreso correcto")
+            login_data = ask_params("Email", "Clave")
+            if @user_controller.login(login_data["Email"],
+                                      login_data["Clave"])
+                @prompt.ok("Bienvenido")
                 sleep(1)
 
                 LoggedView.new()

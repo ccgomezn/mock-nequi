@@ -9,7 +9,6 @@ class TransactionController
 
   def get_all_transactions()
     transactions = @transaction_manager.get_all_transactions($session[:account_id])
-    transactions
   end
 
 end
