@@ -2,12 +2,12 @@ require_relative './individual_transaction_controller'
 require_relative '../db_managers/goal_manager'
 
 class GoalController
-  def initialize()
-    @individual_transaction = IndividualTransactionController.new()
-    @goal_manager = GoalManager.new()
+  def initialize
+    @individual_transaction = IndividualTransactionController.new
+    @goal_manager = GoalManager.new
   end
 
-  def debit(amount, product_id, location = "virtual-virtual")
+  def debit(amount, product_id, location = 'virtual-virtual')
     @individual_transaction.transaction_on_account(
       amount,
       $session[:account_id],
@@ -17,7 +17,7 @@ class GoalController
     )
   end
 
-  def withdraw(amount, product_id, location = "virtual-virtual")
+  def withdraw(amount, product_id, location = 'virtual-virtual')
     @individual_transaction.transaction_on_account(
       - amount,
       $session[:account_id],
@@ -43,7 +43,6 @@ class GoalController
   def find_all
     @goal_manager.find_all($session[:account_id])
   end
-  
 
   def create(name, goal, deadline)
     date = DateTime.now

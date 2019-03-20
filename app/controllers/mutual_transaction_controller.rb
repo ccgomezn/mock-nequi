@@ -4,16 +4,12 @@ require_relative '../db_managers/account_manager'
 require_relative '../db_managers/pocket_manager'
 require_relative '../models/mutual_transaction'
 
-
-
-
 class MutualTransactionController
-
-  def initialize()
-    @transaction_manager = TransactionManager.new()
-    @mutual_transaction_manager = MutualTransactionManager.new()
-    @account_manager = AccountManager.new()
-    @pocket_manager = PocketManager.new()
+  def initialize
+    @transaction_manager = TransactionManager.new
+    @mutual_transaction_manager = MutualTransactionManager.new
+    @account_manager = AccountManager.new
+    @pocket_manager = PocketManager.new
   end
 
   def consign_to_another_account(amount, origin_id, origin_product_type, final_account_id)
@@ -21,13 +17,12 @@ class MutualTransactionController
     create_mutual_transaction(origin_id, origin_product_type,
                               final_account_id, transaction.id)
 
-    if origin_product_type == "account"
+    if origin_product_type == 'account'
       update_accounts_balance(amount, origin_id, final_account_id)
-    elsif origin_product_type == "pocket"
+    elsif origin_product_type == 'pocket'
       update_pocket_balance(amount, origin_id, final_account_id)
     end
   end
-
 
   private
 
@@ -52,11 +47,11 @@ class MutualTransactionController
     origin_account_id = $session[:account_id]
     origin_account = @account_manager.find(origin_account_id)
     final_account = @account_manager.find(final_account_id)
-  
-    data_origin_pocket = { balance: origin_pocket.balance - amount}
-    data_origin_account = { total_balance: origin_account.total_balance - 
+
+    data_origin_pocket = { balance: origin_pocket.balance - amount }
+    data_origin_account = { total_balance: origin_account.total_balance -
                                            amount }
-                           
+
     data_final_account = { available_balance: final_account.avaiable_balance +
                                               amount,
                            total_balance: final_account.total_balance + amount }
@@ -81,7 +76,7 @@ class MutualTransactionController
   end
 
   def insert(transaction_id, origin_account_id, final_account_id)
-    mutualTransactionManager = MutualTransactionManager.new()
+    mutualTransactionManager = MutualTransactionManager.new
     mutual_map = { transaction_id: transaction_id, origin_account_id: origin_account_id, final_account_id: final_account_id }
     mutualTransactionManager.insert(mutual_map)
   end
@@ -91,7 +86,7 @@ class MutualTransactionController
   end
 
   def update(id, transaction_id, origin_account_id, final_account_id)
-    mutualTransactionManager = MutualTransactionManager.new()
+    mutualTransactionManager = MutualTransactionManager.new
     mutual_map = { transaction_id: transaction_id, origin_account_id: origin_account_id, final_account_id: final_account_id }
     mutualTransactionManager.update(id, mutual_map)
   end
@@ -99,5 +94,4 @@ class MutualTransactionController
   def delete(id)
     mutualTransactionManager.delete(id)
   end
-
 end

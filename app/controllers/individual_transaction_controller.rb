@@ -6,16 +6,14 @@ require_relative '../db_managers/mattress_manager'
 require_relative '../db_managers/pocket_manager'
 require_relative '../models/individual_transaction'
 
-
 class IndividualTransactionController
-
-  def initialize()
-    @account_manager = AccountManager.new()
-    @goal_manager = GoalManager.new()
-    @mattress_manager = MattressManager.new()
-    @pocket_manager = PocketManager.new()
-    @transaction_manager = TransactionManager.new()
-    @individual_transaction_manager = IndividualTransactionManager.new()
+  def initialize
+    @account_manager = AccountManager.new
+    @goal_manager = GoalManager.new
+    @mattress_manager = MattressManager.new
+    @pocket_manager = PocketManager.new
+    @transaction_manager = TransactionManager.new
+    @individual_transaction_manager = IndividualTransactionManager.new
   end
 
   def transaction_on_account(amount, account_id, product, product_id, location)
@@ -96,10 +94,9 @@ class IndividualTransactionController
     @individual_transaction_manager.insert(data_individual_transaction)
   end
 
-
   def insert(product, location, transaction_id, account_id)
-    individualTransactionManager = IndividualTransactionManager.new()
-    individual_map = {:product => product, :location => location, :transaction_id => transaction_id, :account_id => account_id}
+    individualTransactionManager = IndividualTransactionManager.new
+    individual_map = { product: product, location: location, transaction_id: transaction_id, account_id: account_id }
     individualTransactionManager.insert(individual_map)
   end
 
@@ -108,13 +105,12 @@ class IndividualTransactionController
   end
 
   def update(id, product, location, transaction_id, account_id)
-    individualTransactionManager = IndividualTransactionManager.new()
-    individual_map = {:product => product, :location => location, :transaction_id => transaction_id, :account_id => account_id}
+    individualTransactionManager = IndividualTransactionManager.new
+    individual_map = { product: product, location: location, transaction_id: transaction_id, account_id: account_id }
     individualTransactionManager.update(id, individual_map)
   end
 
   def delete(id)
     individualTransactionManager.delete(id)
   end
-
 end
