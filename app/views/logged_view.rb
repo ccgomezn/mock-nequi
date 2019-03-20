@@ -1,7 +1,7 @@
 require_relative 'helpers/cli_menu_builder'
 require_relative 'account_view'
 require_relative '../controllers/account_controller'
-require_relative 'goal_view'
+require_relative 'principal_goal_view'
 require_relative '../controllers/goal_controller'
 require_relative 'mattress_view'
 require_relative '../controllers/mattress_controller'
@@ -37,7 +37,7 @@ class LoggedView
         end
         menu.add('Metas') do |selected|
             goal_controller = GoalController.new()
-            GoalView.new(account_controller, goal_controller)
+            PrincipalGoalView.new(account_controller, goal_controller)
         end
         menu.add('Colchon') do |selected|
             mattress_controller = MattressController.new()
@@ -47,7 +47,7 @@ class LoggedView
             pocket_controller = PocketController.new()
             PrincipalPocketView.new(account_controller, pocket_controller)
         end
-        menu.add('Regresar') do |selected|
+        menu.add('Cerrar sesion') do |selected|
             PrincipalView.new()
         end
 

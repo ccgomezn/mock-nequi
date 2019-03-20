@@ -27,6 +27,15 @@ class GoalController
     )
   end
 
+  def goal_status_check(product_id, goal_amount)
+    p product_id
+    p goal_amount
+    if get_balance(product_id) >= goal_amount
+      goal_map = {:state => "Cumplida"}
+      @goal_manager.update(product_id, goal_map)
+    end   
+  end
+
   def get_balance(product_id)
     @goal_manager.find(product_id).balance
   end
@@ -36,9 +45,12 @@ class GoalController
   end
   
 
-  def insert(name, goal, deadline)
+  def create(name, goal, deadline)
     date = DateTime.now
-    goal_map = {:balance => 0,:name => name, :goal => goal.to_i, :state => 'No cumplida', :deadline => deadline, :creation_date => date.strftime('%Y-%m-%d %H:%M:%S'), :account_id => $session[:account_id]}
+    goal_map = {:balance => 0,:name => name, :goal => goal.to_f,
+                :state => 'No cumplida', :deadline => deadline, 
+                :creation_date => date.strftime('%Y-%m-%d %H:%M:%S'), 
+                :account_id => $session[:account_id]}
     @goal_manager.insert(goal_map)
   end
 
@@ -47,6 +59,12 @@ class GoalController
   end
 
   def delete(id)
+    balance = get_balance(id)
+    if balance > 0
+      withdraw(balance, id)
+    end
+    
     @goal_manager.delete(id)
   end
+
 end
