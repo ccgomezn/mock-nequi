@@ -7,7 +7,7 @@ class DbHandler
     attr_reader :db
 
     def initialize()
-        db_folder_path = "../../db/"
+        db_folder_path = "./db/"
         db_name = "mock_nequi_db.db"
         @db = connect(db_folder_path, db_name)
 
