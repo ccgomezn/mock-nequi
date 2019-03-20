@@ -9,12 +9,15 @@ class GoalManager
     def insert(params)
                 
         if valid_data?(params)
-            insert_execution("goals", params)
-            goal_id = get_last_register_execution('goals')
-            params[:id] = goal_id[0]
-            Goal.new(params)
+            if(insert_execution("goals", params))
+                goal_id = get_last_register_execution('goals')
+                params[:id] = goal_id[0]
+                Goal.new(params)
+            else
+                false
+            end
         else
-            print("ERROR: couldn't insert account data")
+            false
         end
     end
     

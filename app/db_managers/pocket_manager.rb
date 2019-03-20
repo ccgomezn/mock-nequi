@@ -8,10 +8,15 @@ class PocketManager
 
     def insert(params)
         if valid_data?(params)
-            insert_execution('pockets', params)
-            pocket_id = get_last_register_execution('pockets')
-            params[:id] = pocket_id[0]
-            Pocket.new(params)
+            if(insert_execution('pockets', params))
+                pocket_id = get_last_register_execution('pockets')
+                params[:id] = pocket_id[0]
+                Pocket.new(params)
+            else
+                false
+            end
+        else
+            false
         end
     end
   

@@ -9,18 +9,24 @@ class AccountManager
     def insert(params)                
         if valid_data?(params)
             
-            insert_execution("accounts", params)
-            account_id = get_last_register_execution('accounts')
-            params[:id] = account_id[0]
+            if(insert_execution("accounts", params))
+                account_id = get_last_register_execution('accounts')
+                params[:id] = account_id[0]
 
-            Account.new(params)
+                Account.new(params)
+            else
+                return false
+            end
         else
-            print("ERROR: couldn't insert account data")
+            return false
         end
     end
 
     def find(id)
         data_query = find_execution("accounts", id)
+        if data_query.nil?
+            return nil
+        end
         data_account = {id: data_query[0], avaiable_balance: data_query[1],
                         total_balance: data_query[2], creation_date: data_query[3]}
         Account.new(data_account)

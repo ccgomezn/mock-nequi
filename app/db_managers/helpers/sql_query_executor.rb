@@ -35,6 +35,12 @@ module SqlQueryExecutor
         execute_query(find_join_query, data, find_error)
     end
 
+    def find_all_column_join_execution(table1, table2, column, data)
+        find_join_query = find_all_by_column_join_query(table1, table2, column)
+        
+        execute_query(find_join_query, data, find_error)
+    end
+
     def insert_execution(table_name, data)
         columns = data.keys
         values = data.values
@@ -75,8 +81,7 @@ module SqlQueryExecutor
                 data.push(row)
             end
         rescue SQLite3::Exception => sql_error
-            puts(query_error)
-            puts(sql_error)
+            return false
         ensure
             stmt_close(query_stmt)
             return data

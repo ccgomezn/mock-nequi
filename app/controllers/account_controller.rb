@@ -14,13 +14,16 @@ class AccountController
 
   def consign_to_another_account(amount, final_account_email)
     final_account_id = find_by_email(final_account_email)
-    
+    if final_account_id.nil? || final_account_id.length.zero?
+      return false
+    end
     @mutual_transaction.consign_to_another_account(
       amount,
       $session[:account_id],
       'account',
       final_account_id
     )
+    true
   end
 
   def debit(amount, location = "virtual-virtual")
